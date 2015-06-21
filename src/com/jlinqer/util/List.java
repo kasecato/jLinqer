@@ -21,19 +21,6 @@ public class List<TSource> implements java.util.List<TSource>, IEnumerable<TSour
 
 // -------------------------- STATIC METHODS --------------------------
 
-    public List() {
-        list = new ArrayList<>();
-    }
-
-    @SafeVarargs
-    public List(final TSource... args) {
-        list = Arrays.asList(args);
-    }
-
-    public List(final java.util.List<TSource> list) {
-        this.list = list;
-    }
-
     /**
      * ﻿Returns an empty List<T> that has the specified ﻿type argument.
      *
@@ -47,8 +34,6 @@ public class List<TSource> implements java.util.List<TSource>, IEnumerable<TSour
 
         return new List<>();
     }
-
-// --------------------------- CONSTRUCTORS ---------------------------
 
     /**
      * ﻿Generates a sequence that contains one repeated value.
@@ -73,6 +58,11 @@ public class List<TSource> implements java.util.List<TSource>, IEnumerable<TSour
         return list;
     }
 
+    @Override
+    public boolean add(final TSource t) {
+        return list.add(t);
+    }
+
     /**
      * ﻿Generates a sequence of integral numbers within a specified range.
      *
@@ -94,9 +84,19 @@ public class List<TSource> implements java.util.List<TSource>, IEnumerable<TSour
         return list;
     }
 
-    @Override
-    public boolean add(final TSource t) {
-        return list.add(t);
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    public List() {
+        list = new ArrayList<>();
+    }
+
+    @SafeVarargs
+    public List(final TSource... args) {
+        list = Arrays.asList(args);
+    }
+
+    public List(final java.util.List<TSource> list) {
+        this.list = list;
     }
 
 // ------------------------ CANONICAL METHODS ------------------------
