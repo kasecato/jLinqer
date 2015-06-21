@@ -2,11 +2,62 @@
 
 "**jLinqer**" is a Java implementation of LINQ.
 
+##LINQ - jLinqer Matrix
+
+| LINQ(C#) | jLinqer(Java) | Stream(Java) |
+|------|-------|--------|
+| Where | [where](#where) | filter |
+| Select | [select](#select) | map |
+| OrderBy | [orderBy](#orderby) | sorted |
+| OrderByDescending | [orderByDescending](#orderbydescending) | n/a |
+| ThenBy / ThenByDescending | n/a | n/a |
+| SelectMany | [selectMany](#selectmany) | flatMap |
+|||||
+| Skip | [skip](#skip) | skip |
+| SkipWhile | [skipWhile](#skipwhile) | n/a |
+| Take | [take](#take) | limit | 
+| TakeWhile | [takeWhile](#takewhile) | n/a |
+|||||
+| Concat | [concat](#concat) | concat |
+| Intersect | [intersect](#intersect) | n/a |
+| Union | [union](#union) | n/a |
+| Except | [except](#except) | n/a |
+| Join | n/a | n/a |
+| GroupJoin | n/a | n/a |
+| Reverse | [reverse](#reverse) | n/a |
+| Zip | n/a | n/a |
+|||||
+| Distinct | [distinct](#distinct) | distinct |
+| Aggregate | [aggregate](#aggregate) | reduce |
+| GroupBy | [groupBy](#groupby) | Collectors.groupingBy |
+| Average | [averageXXX](#average) | Collectors.summarizingXXX |
+| Count / LongCount | [count](#count) | count |
+| Max | [maxXXX](#max) | max |
+| Min | [minXXX](#min) | min |
+| Sum | [sumXXX](#sum) | Collectors.summarizingXXX |
+| First | [first](#first) | findFirst |
+| FirstOrDefault | [firstOrDefault](#firstOrDefault) | n/a |
+| Last | [last](#last) | n/a |
+| LastOrDefault | [lastOrDefault](#lastOrDefault) | n/a |
+| Single | [single](#single) | n/a |
+| SingleOrDefault | [singleOrDefault](#singleOrDefault) | n/a |
+| DefaultIfEmpty | [defaultIfEmpty](#defaultIfEmpty) | n/a |
+| ElementAt | [elementAt](#elementAt) | n/a |
+| ElementAtOrDefalut | [elementAtOrDefalut](#elementAtOrDefault) | n/a |
+| All | [all](#all) | allMatch |
+| Any | [any](#any) | anyMatch |
+|||||
+| Empty | [empty](#empty) | n/a |
+| Range | [range](#range) | n/a |
+| Repeat | [repeat](#repeat) | n/a |
+|||||
+| SequenceEqual | [sequenceEqual](#sequenceequal) | n/a |
+| Cast | [cast](#cast) | n/a |
+| OfType | [ofType](#oftype) | n/a |
 
 ## Usage
 
 The following operations are available.
-
 ### Where
 
 ```Java
@@ -35,24 +86,6 @@ assertEquals("Angular" , actual.get(1));
 assertEquals("Backbone", actual.get(2));
 ```
 
-### SelectMany
-
-```Java
-List<Person> list = new List<>(
-        new Person("Angular", 3, Arrays.asList("1.0.1", "1.0.2")),
-        new Person("React"  , 1, Arrays.asList("2.0.1", "2.0.2"))
-);
-
-// act
-List<String> actual = list.selectMany(x -> x.versionHistory.stream());
-
-// assert
-assertEquals("1.0.1", actual.get(0));
-assertEquals("1.0.2", actual.get(1));
-assertEquals("2.0.1", actual.get(2));
-assertEquals("2.0.2", actual.get(3));
-```
-
 ### OrderBy
 
 ```Java
@@ -77,247 +110,20 @@ assertEquals("Backbone", actual.get(1));
 assertEquals("Angular" , actual.get(2));
 ```
 
-
-### Union
-
-```Java
-List<Integer> first = new List<>(1, 2, 3);
-List<Integer> second = new List<>(0, 1, 3, 4);
-
-List<Integer> actual = first.union(second);
-
-assertEquals(5, actual.size());
-assertEquals(1, actual.get(0).intValue());
-assertEquals(2, actual.get(1).intValue());
-assertEquals(3, actual.get(2).intValue());
-assertEquals(0, actual.get(3).intValue());
-assertEquals(4, actual.get(4).intValue());
-```
-
-### Intersect
-
-```Java
-List<Integer> first  = new List<>(1, 2, 3);
-List<Integer> second = new List<>(1, 3);
-
-List<Integer> actual = first.intersect(second);
-
-assertEquals(1, actual.get(0).intValue());
-assertEquals(3, actual.get(1).intValue());
-```
-
-### Except
-
-```Java
-List<Integer> first  = new List<>(1, 2, 3);
-List<Integer> second = new List<>(1, 3);
-
-List<Integer> actual = first.except(second);
-
-assertEquals(2, actual.get(0).intValue());
-```
-### Concat
-
-```Java
-List<Integer> first  = new List<>(1, 2);
-List<Integer> second = new List<>(2, 3);
-
-List<Integer> actual = first.concat(second);
-
-assertEquals(1, actual.get(0).intValue());
-assertEquals(2, actual.get(1).intValue());
-assertEquals(2, actual.get(2).intValue());
-assertEquals(3, actual.get(3).intValue());
-```
-
-### Reverse
-
-```Java
-List<Integer> list = new List<>(1, 2, 3);
-
-List<Integer> actual = list.reverse();
-
-assertEquals(3, actual.get(0).intValue());
-assertEquals(2, actual.get(1).intValue());
-assertEquals(1, actual.get(2).intValue());
-```
-
-### GroupBy
+### SelectMany
 
 ```Java
 List<Person> list = new List<>(
-        new Person("React"   , 1),
-        new Person("Angular" , 1),
-        new Person("Backbone", 5)
+        new Person("Angular", 3, Arrays.asList("1.0.1", "1.0.2")),
+        new Person("React"  , 1, Arrays.asList("2.0.1", "2.0.2"))
 );
 
-Map<Integer, List<Person>> actual = list.groupBy(x -> x.age);
+List<String> actual = list.selectMany(x -> x.versionHistory.stream());
 
-// assert
-assertEquals(true, actual.get(1).any(x -> x.name.equals("React")));
-assertEquals(true, actual.get(1).any(x -> x.name.equals("Angular")));
-assertEquals(true, actual.get(5).any(x -> x.name.equals("Backbone")));
-```
-
-### Distinct
-
-```Java
-List<Integer> list =
-        new List<>(
-                1, 2, 3,
-                1, 2, 3, 4
-        );
-
-List<Integer> actual = list.distinct();
-
-assertEquals(1, actual.get(0).intValue());
-assertEquals(2, actual.get(1).intValue());
-assertEquals(3, actual.get(2).intValue());
-assertEquals(4, actual.get(3).intValue());
-```
-
-### Aggregate
-
-```Java
-List<Integer> list = new List<>(1, 2, 3);
-
-int actual = list.aggregate((sum, elem) -> sum + elem);
-
-assertEquals(6, actual);
-```
-
-### FirstOrDefault
-
-```Java
-// arrange
-List<String> list = new List<>("Backbone", "Angular", "React");
-
-// act
-String actualFirst   = list.firstOrDefault();
-String actualMatch   = list.firstOrDefault(x -> x.equals("Angular"));
-String actualUnMatch = list.firstOrDefault(x -> x.equals("jquery"));
-
-// assert
-assertEquals("Backbone", actualFirst);
-assertEquals("Angular" , actualMatch);
-assertEquals(null      , actualUnMatch);
-```
-
-### LastOrDefault
-
-```Java
-List<Integer> list = new List<>(1, 2, 3);
-
-int actual = list.lastOrDefault();
-Integer actualDefaultNone = listEmpty.lastOrDefault(x -> x == 0);
-
-assertEquals(3, actual);
-assertEquals(null, actualDefaultNone);
-```
-
-### SingleOrDefault
-
-```Java
-List<Integer> listMany = new List<>(1, 2, 3);
-
-int actualFilter = listMany.singleOrDefault(x -> x == 3);
-Integer actualUnMatch = listEmpty.singleOrDefault(x -> x == 0);
-
-assertEquals(3, actualFilter);
-assertEquals(null, actualUnMatch);
-```
-
-### ElementAtOrDefault
-
-```Java
-List<Integer> list = new List<>(1, 2, 3);
-
-int actual = list.elementAtOrDefault(2);
-Integer actualDefault = list.elementAtOrDefault(3);
-
-assertEquals(3, actual);
-assertEquals(null, actualDefault);
-```
-
-### Max
-
-```Java
-List<Double> listDouble = new List<>(1d, 2d, 3d);
-
-double actualDouble = listDouble.maxDouble(x -> x);
-
-assertEquals(3d, actualBigDecimal.doubleValue(), 0);
-```
-
-### Min
-
-```Java
-List<BigDecimal> listBigDecimal = new List<>(
-        new BigDecimal(1d),
-        new BigDecimal(2d),
-        new BigDecimal(3d)
-);
-
-BigDecimal actualBigDecimal = listBigDecimal.minBigDecimal(x -> x);
-
-assertEquals(1d, actualBigDecimal.doubleValue(), 0);
-```
-
-### Sum
-
-```Java
-List<Integer> listInt = new List<>(1, 2, 3);
-
-int actualInt = listInt.sumInt(x -> x);
-
-assertEquals(6, actualInt);
-```
-
-### Average
-
-```Java
-List<Long> listLong = new List<>(1l, 2l, 3l, 4l);
-
-double actualLong = listLong.averageLong(x -> x);
-
-assertEquals(2.5d, actualLong);
-```
-
-### Count
-
-```Java
-List<String> list = new List<>("Backbone", "Angular", "React");
-
-long actual = list.count();
-long actualNone = list.count(x -> x.equals("jquery"));
-
-// assert
-assertEquals(3, actual);
-assertEquals(0, actualNone);
-```
-
-### All
-
-```Java
-List<String> list = new List<>("Backbone", "Angular", "React");
-
-boolean actual = list.all(x -> x.equals("Angular") || x.equals("Backbone") || x.equals("React"));
-boolean actualNotFound = list.all(x -> x.equals("Angular") || x.equals("React"));
-
-assertEquals(true, actual);
-assertEquals(false, actualNotFound);
-```
-
-### Any
-
-```Java
-List<String> list = new List<>("Backbone", "Angular", "React");
-
-boolean actual = list.any(x -> x.equals("Angular"));
-boolean actualNotFound = list.any(x -> x.equals("jquery"));
-
-assertEquals(true, actual);
-assertEquals(false, actualNotFound);
+assertEquals("1.0.1", actual.get(0));
+assertEquals("1.0.2", actual.get(1));
+assertEquals("2.0.1", actual.get(2));
+assertEquals("2.0.2", actual.get(3));
 ```
 
 ### Skip
@@ -364,6 +170,262 @@ assertEquals(2, actual.size());
 assertEquals("Backbone", actual.get(0));
 assertEquals("Angular" , actual.get(1));
 ```
+### Concat
+
+```Java
+List<Integer> first  = new List<>(1, 2);
+List<Integer> second = new List<>(2, 3);
+
+List<Integer> actual = first.concat(second);
+
+assertEquals(1, actual.get(0).intValue());
+assertEquals(2, actual.get(1).intValue());
+assertEquals(2, actual.get(2).intValue());
+assertEquals(3, actual.get(3).intValue());
+```
+
+### Intersect
+
+```Java
+List<Integer> first  = new List<>(1, 2, 3);
+List<Integer> second = new List<>(1, 3);
+
+List<Integer> actual = first.intersect(second);
+
+assertEquals(1, actual.get(0).intValue());
+assertEquals(3, actual.get(1).intValue());
+```
+
+### Union
+
+```Java
+List<Integer> first = new List<>(1, 2, 3);
+List<Integer> second = new List<>(0, 1, 3, 4);
+
+List<Integer> actual = first.union(second);
+
+assertEquals(5, actual.size());
+assertEquals(1, actual.get(0).intValue());
+assertEquals(2, actual.get(1).intValue());
+assertEquals(3, actual.get(2).intValue());
+assertEquals(0, actual.get(3).intValue());
+assertEquals(4, actual.get(4).intValue());
+```
+
+### Except
+
+```Java
+List<Integer> first  = new List<>(1, 2, 3);
+List<Integer> second = new List<>(1, 3);
+
+List<Integer> actual = first.except(second);
+
+assertEquals(2, actual.get(0).intValue());
+```
+
+### Reverse
+
+```Java
+List<Integer> list = new List<>(1, 2, 3);
+
+List<Integer> actual = list.reverse();
+
+assertEquals(3, actual.get(0).intValue());
+assertEquals(2, actual.get(1).intValue());
+assertEquals(1, actual.get(2).intValue());
+```
+
+
+### Distinct
+
+```Java
+List<Integer> list =
+        new List<>(
+                1, 2, 3,
+                1, 2, 3, 4
+        );
+
+List<Integer> actual = list.distinct();
+
+assertEquals(1, actual.get(0).intValue());
+assertEquals(2, actual.get(1).intValue());
+assertEquals(3, actual.get(2).intValue());
+assertEquals(4, actual.get(3).intValue());
+```
+
+### Aggregate
+
+```Java
+List<Integer> list = new List<>(1, 2, 3);
+
+int actual = list.aggregate((sum, elem) -> sum + elem);
+
+assertEquals(6, actual);
+```
+
+### GroupBy
+
+```Java
+List<Person> list = new List<>(
+        new Person("React"   , 1),
+        new Person("Angular" , 1),
+        new Person("Backbone", 5)
+);
+
+Map<Integer, List<Person>> actual = list.groupBy(x -> x.age);
+
+assertEquals(true, actual.get(1).any(x -> x.name.equals("React")));
+assertEquals(true, actual.get(1).any(x -> x.name.equals("Angular")));
+assertEquals(true, actual.get(5).any(x -> x.name.equals("Backbone")));
+```
+
+### Average
+
+```Java
+List<Long> listLong = new List<>(1l, 2l, 3l, 4l);
+
+double actualLong = listLong.averageLong(x -> x);
+
+assertEquals(2.5d, actualLong);
+```
+
+### Count
+
+```Java
+List<String> list = new List<>("Backbone", "Angular", "React");
+
+long actual = list.count();
+long actualNone = list.count(x -> x.equals("jquery"));
+
+assertEquals(3, actual);
+assertEquals(0, actualNone);
+```
+
+### Max
+
+```Java
+List<Double> listDouble = new List<>(1d, 2d, 3d);
+
+double actualDouble = listDouble.maxDouble(x -> x);
+
+assertEquals(3d, actualBigDecimal.doubleValue(), 0);
+```
+
+### Min
+
+```Java
+List<BigDecimal> listBigDecimal = new List<>(
+        new BigDecimal(1d),
+        new BigDecimal(2d),
+        new BigDecimal(3d)
+);
+
+BigDecimal actualBigDecimal = listBigDecimal.minBigDecimal(x -> x);
+
+assertEquals(1d, actualBigDecimal.doubleValue(), 0);
+```
+
+### Sum
+
+```Java
+List<Integer> listInt = new List<>(1, 2, 3);
+
+int actualInt = listInt.sumInt(x -> x);
+
+assertEquals(6, actualInt);
+```
+
+### FirstOrDefault
+
+```Java
+List<String> list = new List<>("Backbone", "Angular", "React");
+
+String actualFirst   = list.firstOrDefault();
+String actualMatch   = list.firstOrDefault(x -> x.equals("Angular"));
+String actualUnMatch = list.firstOrDefault(x -> x.equals("jquery"));
+
+assertEquals("Backbone", actualFirst);
+assertEquals("Angular" , actualMatch);
+assertEquals(null      , actualUnMatch);
+```
+
+### LastOrDefault
+
+```Java
+List<Integer> list = new List<>(1, 2, 3);
+
+int actual = list.lastOrDefault();
+Integer actualDefaultNone = listEmpty.lastOrDefault(x -> x == 0);
+
+assertEquals(3, actual);
+assertEquals(null, actualDefaultNone);
+```
+
+### SingleOrDefault
+
+```Java
+List<Integer> listMany = new List<>(1, 2, 3);
+
+int actualFilter = listMany.singleOrDefault(x -> x == 3);
+Integer actualUnMatch = listEmpty.singleOrDefault(x -> x == 0);
+
+assertEquals(3, actualFilter);
+assertEquals(null, actualUnMatch);
+```
+
+### DefaultIfEmpty
+
+```Java
+List<String> listEmpty = new List<>();
+
+List<String> actualDefault = listEmpty.defaultIfEmpty("ES7");
+
+assertEquals("ES7", actualDefault.get(0));
+```
+
+### ElementAtOrDefault
+
+```Java
+List<Integer> list = new List<>(1, 2, 3);
+
+int actual = list.elementAtOrDefault(2);
+Integer actualDefault = list.elementAtOrDefault(3);
+
+assertEquals(3, actual);
+assertEquals(null, actualDefault);
+```
+
+### All
+
+```Java
+List<String> list = new List<>("Backbone", "Angular", "React");
+
+boolean actual = list.all(x -> x.equals("Angular") || x.equals("Backbone") || x.equals("React"));
+boolean actualNotFound = list.all(x -> x.equals("Angular") || x.equals("React"));
+
+assertEquals(true, actual);
+assertEquals(false, actualNotFound);
+```
+
+### Any
+
+```Java
+List<String> list = new List<>("Backbone", "Angular", "React");
+
+boolean actual = list.any(x -> x.equals("Angular"));
+boolean actualNotFound = list.any(x -> x.equals("jquery"));
+
+assertEquals(true, actual);
+assertEquals(false, actualNotFound);
+```
+
+### Empty
+
+```Java
+List<Double> actual = List.empty(Double.class);
+
+assertEquals(0, actual.count());
+```
 
 ### Range
 
@@ -384,14 +446,6 @@ assertEquals(10, actual.count());
 assertEquals("Law of Cycles", actual.get(9));
 ```
 
-### Empty
-
-```Java
-List<Double> actual = List.empty(Double.class);
-
-assertEquals(0, actual.count());
-```
-
 ### SequenceEqual
 
 ```Java
@@ -404,16 +458,6 @@ boolean actualUnMatchElm = first.sequenceEqual(secondUnMatchElem);
 
 assertEquals(true, actualMatch);
 assertEquals(false, actualUnMatchElm);
-```
-
-### DefaultIfEmpty
-
-```Java
-List<String> listEmpty = new List<>();
-
-List<String> actualDefault = listEmpty.defaultIfEmpty("ES7");
-
-assertEquals("ES7", actualDefault.get(0));
 ```
 
 ### Cast
@@ -441,3 +485,9 @@ assertEquals("4", actualStr.get(1));
 assertEquals(1  , actualInt.get(0).intValue());
 assertEquals(3  , actualInt.get(1).intValue());
 ```
+
+#Reference
+
+[1] Microsoft Reference Source, "Enumerable.cs", http://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs
+[2] GitHub, "javaLinq", https://github.com/sircodesalotOfTheRound/javaLinq
+[3] Qiita, "LINQ to Objects と Java8-Stream API の対応表", http://qiita.com/amay077/items/9d2941283c4a5f61f302
