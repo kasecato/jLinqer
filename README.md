@@ -61,6 +61,8 @@ The following operations are available.
 
 ### Where
 
+### Where
+
 ```Java
 List<Integer> list = new List<>(1, 2, 3);
 
@@ -273,7 +275,7 @@ List<Person> list = new List<>(
         new Person("Backbone", 5)
 );
 
-Map<Integer, List<Person>> actual = list.groupBy(x -> x.age);
+Map<Integer, IEnumerable<Person>> actual = list.groupBy(x -> x.age);
 
 assertEquals(true, actual.get(1).any(x -> x.name.equals("React")));
 assertEquals(true, actual.get(1).any(x -> x.name.equals("Angular")));
@@ -287,7 +289,7 @@ List<Long> listLong = new List<>(1l, 2l, 3l, 4l);
 
 double actualLong = listLong.averageLong(x -> x);
 
-assertEquals(2.5d, actualLong);
+assertEquals(2.5d, actualLong, 0);
 ```
 
 ### Count
@@ -309,7 +311,7 @@ List<Double> listDouble = new List<>(1d, 2d, 3d);
 
 double actualDouble = listDouble.max(x -> x);
 
-assertEquals(3d, actualBigDecimal.doubleValue(), 0);
+assertEquals(3d, actualDouble, 0);
 ```
 
 ### Min
@@ -354,6 +356,7 @@ assertEquals(null      , actualUnMatch);
 
 ```Java
 List<Integer> list = new List<>(1, 2, 3);
+List<Integer> listEmpty = new List<>();
 
 int actual = list.lastOrDefault();
 Integer actualDefaultNone = listEmpty.lastOrDefault(x -> x == 0);
@@ -366,6 +369,7 @@ assertEquals(null, actualDefaultNone);
 
 ```Java
 List<Integer> listMany = new List<>(1, 2, 3);
+List<Integer> listEmpty = new List<>();
 
 int actualFilter = listMany.singleOrDefault(x -> x == 3);
 Integer actualUnMatch = listEmpty.singleOrDefault(x -> x == 0);
@@ -379,7 +383,7 @@ assertEquals(null, actualUnMatch);
 ```Java
 List<String> listEmpty = new List<>();
 
-List<String> actualDefault = listEmpty.defaultIfEmpty("ES7");
+List<String> actualDefault = listEmpty.defaultIfEmpty("ES7").toList();
 
 assertEquals("ES7", actualDefault.get(0));
 ```
