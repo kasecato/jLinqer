@@ -1,6 +1,7 @@
 package com.jlinqer;
 
-import com.jlinqer.util.List;
+import com.jlinqer.collections.List;
+import com.jlinqer.linq.IEnumerable;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -92,7 +93,7 @@ public class ListTest {
         List<Object> list = new List<>(1, 2, 3);
 
         // act
-        List<Integer> actual = list.cast(Integer.class);
+        List<Integer> actual = list.cast(Integer.class).toList();
 
         // assert
         assertEquals(1, actual.get(0).intValue());
@@ -107,7 +108,7 @@ public class ListTest {
         List<Integer> listSecond = new List<>(4, 5, 6);
 
         // act
-        List<Integer> actual = list.concat(listSecond);
+        List<Integer> actual = list.concat(listSecond).toList();
 
         // assert
         assertEquals(6, actual.count());
@@ -136,10 +137,10 @@ public class ListTest {
         List<String> listEmpty = new List<>();
 
         // act
-        List<String> actual = list.defaultIfEmpty();
-        List<String> actualEmpty = listEmpty.defaultIfEmpty();
-        List<String> actualDefault = listEmpty.defaultIfEmpty("ES7");
-        List<String> actualDefaultNull = listEmpty.defaultIfEmpty(null);
+        List<String> actual = list.defaultIfEmpty().toList();
+        List<String> actualEmpty = listEmpty.defaultIfEmpty().toList();
+        List<String> actualDefault = listEmpty.defaultIfEmpty("ES7").toList();
+        List<String> actualDefaultNull = listEmpty.defaultIfEmpty(null).toList();
 
         // assert
         assertEquals(3, actual.size());
@@ -158,7 +159,7 @@ public class ListTest {
                 );
 
         // act
-        List<Integer> actual = list.distinct();
+        List<Integer> actual = list.distinct().toList();
 
         // assert
         assertEquals(4, actual.count());
@@ -193,7 +194,7 @@ public class ListTest {
     @Test
     public void empty() throws Exception {
         // act
-        List<Double> actual = List.empty(Double.class);
+        List<Double> actual = IEnumerable.empty(Double.class);
 
         // assert
         assertEquals(0, actual.count());
@@ -206,7 +207,7 @@ public class ListTest {
         List<Integer> second = new List<>(1, 3);
 
         // act
-        List<Integer> actual = first.except(second);
+        List<Integer> actual = first.except(second).toList();
 
         // assert
         assertEquals(1, actual.size());
@@ -264,8 +265,7 @@ public class ListTest {
         );
 
         // act
-        Map<Integer, List<Javascript>> actual = list.groupBy(x -> x.age);
-
+        Map<Integer, IEnumerable<Javascript>> actual = list.groupBy(x -> x.age);
 
         // assert
         assertEquals(true, actual.get(1).any(x -> x.name.equals("Angular")));
@@ -282,7 +282,7 @@ public class ListTest {
         List<Integer> second = new List<>(1, 3);
 
         // act
-        List<Integer> actual = first.intersect(second);
+        List<Integer> actual = first.intersect(second).toList();
 
         // assert
         assertEquals(2, actual.size());
@@ -337,10 +337,10 @@ public class ListTest {
         );
 
         // act
-        double actualInt = listInt.maxInt(x -> x);
-        double actualLong = listLong.maxLong(x -> x);
-        double actualDouble = listDouble.maxDouble(x -> x);
-        BigDecimal actualBigDecimal = listBigDecimal.maxBigDecimal(x -> x);
+        double actualInt = listInt.max(x -> x);
+        double actualLong = listLong.max(x -> x);
+        double actualDouble = listDouble.max(x -> x);
+        BigDecimal actualBigDecimal = listBigDecimal.max(x -> x);
 
         // assert
         assertEquals(3, actualInt, 0);
@@ -362,10 +362,10 @@ public class ListTest {
         );
 
         // act
-        double actualInt = listInt.minInt(x -> x);
-        double actualLong = listLong.minLong(x -> x);
-        double actualDouble = listDouble.minDouble(x -> x);
-        BigDecimal actualBigDecimal = listBigDecimal.minBigDecimal(x -> x);
+        double actualInt = listInt.min(x -> x);
+        double actualLong = listLong.min(x -> x);
+        double actualDouble = listDouble.min(x -> x);
+        BigDecimal actualBigDecimal = listBigDecimal.min(x -> x);
 
         // assert
         assertEquals(1, actualInt, 0);
@@ -380,16 +380,14 @@ public class ListTest {
         List<Object> list = new List<>(1, "2", 3, "4");
 
         // act
-        List<String> actualStr = list.ofType(String.class);
-        List<Integer> actualInt = list.ofType(Integer.class);
-        List<StringBuffer> actualZero = list.ofType(StringBuffer.class);
+        List<String> actualStr = list.ofType(String.class).toList();
+        List<Integer> actualInt = list.ofType(Integer.class).toList();
 
         // assert
         assertEquals("2", actualStr.get(0));
         assertEquals("4", actualStr.get(1));
         assertEquals(1, actualInt.get(0).intValue());
         assertEquals(3, actualInt.get(1).intValue());
-        assertEquals(0, actualZero.count());
     }
 
     @Test
@@ -398,7 +396,7 @@ public class ListTest {
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act
-        List<String> actual = list.orderBy(x -> x);
+        List<String> actual = list.orderBy(x -> x).toList();
 
         // assert
         assertEquals("Angular", actual.get(0));
@@ -426,7 +424,7 @@ public class ListTest {
         );
 
         // act
-        List<Javascript> actual = list.orderByDescending(x -> x.age);
+        List<Javascript> actual = list.orderByDescending(x -> x.age).toList();
 
         // assert
         assertEquals(5, actual.get(0).age);
@@ -437,7 +435,7 @@ public class ListTest {
     @Test
     public void range() throws Exception {
         // act
-        List<Integer> actual = List.range(-2, 3);
+        List<Integer> actual = IEnumerable.range(-2, 3);
 
         // assert
         assertEquals(3, actual.count());
@@ -448,7 +446,7 @@ public class ListTest {
     @Test
     public void repeat() throws Exception {
         // act
-        List<String> actual = List.repeat(String.class, "circle", 10);
+        List<String> actual = IEnumerable.repeat(String.class, "circle", 10);
 
         // assert
         assertEquals(10, actual.count());
@@ -461,7 +459,7 @@ public class ListTest {
         List<Integer> list = new List<>(1, 2, 3);
 
         // act
-        List<Integer> actual = list.reverse();
+        List<Integer> actual = list.reverse().toList();
 
         // assert
         assertEquals(3, actual.get(0).intValue());
@@ -493,7 +491,7 @@ public class ListTest {
         );
 
         // act
-        List<Integer> actual = list.select(x -> x.age);
+        List<Integer> actual = list.select(x -> x.age).toList();
 
         // assert
         assertEquals(3, actual.get(0).intValue());
@@ -507,9 +505,9 @@ public class ListTest {
         class Javascript {
             String name;
             int age;
-            java.util.List ver;
+            List ver;
 
-            Javascript(String name, int age, java.util.List<String> ver) {
+            Javascript(String name, int age, List<String> ver) {
                 this.name = name;
                 this.age = age;
                 this.ver = ver;
@@ -517,13 +515,13 @@ public class ListTest {
         }
 
         List<Javascript> list = new List<>(
-                new Javascript("Angular", 3, Arrays.asList("1.0.1", "1.0.2")),
-                new Javascript("React", 1, Arrays.asList("2.0.1", "2.0.2")),
-                new Javascript("Backbone", 1, Arrays.asList("3.0.1", "3.0.2"))
+                new Javascript("Angular", 3, new List<>(Arrays.asList("1.0.1", "1.0.2"))),
+                new Javascript("React", 1, new List<>(Arrays.asList("2.0.1", "2.0.2"))),
+                new Javascript("Backbone", 1, new List<>(Arrays.asList("3.0.1", "3.0.2")))
         );
 
         // act
-        List<String> actual = list.selectMany(x -> x.ver.stream());
+        List<String> actual = list.selectMany(x -> x.ver).toList();
 
         // assert
         assertEquals(6, actual.count());
@@ -595,8 +593,8 @@ public class ListTest {
         List<Integer> list = new List<>(1, 2, 3);
 
         // act
-        List<Integer> actual = list.skip(2);
-        List<Integer> actualOver = list.skip(3);
+        List<Integer> actual = list.skip(2).toList();
+        List<Integer> actualOver = list.skip(3).toList();
 
         // assert
         assertEquals(3, actual.get(0).intValue());
@@ -609,11 +607,13 @@ public class ListTest {
         List<Integer> list = new List<>(1, 2, 3, 4, 5);
 
         // act
-        List<Integer> actual = list.skipWhile(x -> x <= 3);
-        List<Integer> actualUnMatch = list.skipWhile(x -> x <= 5);
+        List<Integer> actual = list.skipWhile(x -> x <= 3).toList();
+        List<Integer> actualAll = list.skipWhile(x -> x == 0).toList();
+        List<Integer> actualUnMatch = list.skipWhile(x -> x <= 5).toList();
 
         // assert
         assertEquals(4, actual.get(0).intValue());
+        assertEquals(5, actualAll.get(4).intValue());
         assertEquals(0, actualUnMatch.count());
     }
 
@@ -647,8 +647,8 @@ public class ListTest {
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act
-        List<String> actual = list.take(2);
-        List<String> actualOver = list.take(4);
+        List<String> actual = list.take(2).toList();
+        List<String> actualOver = list.take(4).toList();
 
         // assert
         assertEquals(2, actual.size());
@@ -665,7 +665,7 @@ public class ListTest {
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act
-        List<String> actual = list.takeWhile(x -> x.equals("Backbone") || x.equals("Angular"));
+        List<String> actual = list.takeWhile(x -> x.equals("Backbone") || x.equals("Angular")).toList();
 
         // assert
         assertEquals(2, actual.size());
@@ -680,7 +680,7 @@ public class ListTest {
         List<Integer> second = new List<>(0, 1, 3, 4);
 
         // act
-        List<Integer> actual = first.union(second);
+        List<Integer> actual = first.union(second).toList();
 
         // assert
         assertEquals(5, actual.size());
@@ -697,7 +697,7 @@ public class ListTest {
         List<Integer> list = new List<>(1, 2, 3);
 
         // act
-        List<Integer> actual = list.where(x -> x == 1 || x == 3);
+        List<Integer> actual = list.where(x -> x == 1 || x == 3).toList();
 
         // assert
         assertEquals(true, actual.contains(1));
