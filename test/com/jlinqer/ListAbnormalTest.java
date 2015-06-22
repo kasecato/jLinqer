@@ -1,6 +1,7 @@
 package com.jlinqer;
 
-import com.jlinqer.util.List;
+import com.jlinqer.collections.List;
+import com.jlinqer.linq.IEnumerable;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -209,7 +210,7 @@ public class ListAbnormalTest {
     public void empty_abnormal() throws Exception {
         // act and assert
         try {
-            List.empty(null);
+            IEnumerable.empty(null);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));
@@ -340,58 +341,16 @@ public class ListAbnormalTest {
     public void max_abnormal() throws Exception {
         // arrange
         List<Integer> listInt = new List<>();
-        List<Long> listLong = new List<>();
-        List<Double> listDouble = new List<>();
-        List<BigDecimal> listBigDecimal = new List<>();
 
         // act and assert
         try {
-            listInt.maxInt(null);
+            listInt.max(null);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));
         }
         try {
-            listInt.maxInt(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
-
-        try {
-            listLong.maxLong(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listLong.maxLong(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
-
-        try {
-            listDouble.maxDouble(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listDouble.maxDouble(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
-
-        try {
-            listBigDecimal.maxBigDecimal(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listBigDecimal.maxBigDecimal(x -> x);
+            listInt.max(x -> x);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(UnsupportedOperationException.class));
@@ -402,58 +361,16 @@ public class ListAbnormalTest {
     public void min_abnormal() throws Exception {
         // arrange
         List<Integer> listInt = new List<>();
-        List<Long> listLong = new List<>();
-        List<Double> listDouble = new List<>();
-        List<BigDecimal> listBigDecimal = new List<>();
 
         // act and assert
         try {
-            listInt.minInt(null);
+            listInt.min(null);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));
         }
         try {
-            listInt.minInt(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
-
-        try {
-            listLong.minLong(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listLong.minLong(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
-
-        try {
-            listDouble.minDouble(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listDouble.minDouble(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
-
-        try {
-            listBigDecimal.minBigDecimal(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listBigDecimal.minBigDecimal(x -> x);
+            listInt.min(x -> x);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(UnsupportedOperationException.class));
@@ -506,14 +423,14 @@ public class ListAbnormalTest {
     public void range_abnormal() throws Exception {
         // act and assert
         try {
-            List.range(0, -1);
+            IEnumerable.range(0, -1);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IndexOutOfBoundsException.class));
         }
 
         try {
-            List.range(2, Integer.MAX_VALUE);
+            IEnumerable.range(2, Integer.MAX_VALUE);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IndexOutOfBoundsException.class));
@@ -524,13 +441,13 @@ public class ListAbnormalTest {
     public void repeat_abnormal() throws Exception {
         // act and assert
         try {
-            List.repeat(null, "React", 10);
+            IEnumerable.repeat(null, "React", 10);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));
         }
         try {
-            List.repeat(String.class, "React", -1);
+            IEnumerable.repeat(String.class, "React", -1);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IndexOutOfBoundsException.class));

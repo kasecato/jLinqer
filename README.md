@@ -32,8 +32,8 @@
 | GroupBy | [groupBy](#groupby) | Collectors.groupingBy |
 | Average | [averageXXX](#average) | Collectors.summarizingXXX |
 | Count / LongCount | [count](#count) | count |
-| Max | [maxXXX](#max) | max |
-| Min | [minXXX](#min) | min |
+| Max | [max](#max) | max |
+| Min | [min](#min) | min |
 | Sum | [sumXXX](#sum) | Collectors.summarizingXXX |
 | First | [first](#first) | findFirst |
 | FirstOrDefault | [firstOrDefault](#firstOrDefault) | n/a |
@@ -58,12 +58,13 @@
 ## Usage
 
 The following operations are available.
+
 ### Where
 
 ```Java
 List<Integer> list = new List<>(1, 2, 3);
 
-List<Integer> actual = list.where(x -> x == 1 || x == 3);
+List<Integer> actual = list.where(x -> x == 1 || x == 3).toList();
 
 assertEquals(true , actual.contains(1));
 assertEquals(false, actual.contains(2));
@@ -79,7 +80,7 @@ List<Person> list = new List<>(
         new Person("Backbone", 5)
 );
 
-List<String> actual = list.select(x -> x.name);
+List<String> actual = list.select(x -> x.name).toList();
 
 assertEquals("React"   , actual.get(0));
 assertEquals("Angular" , actual.get(1));
@@ -91,7 +92,7 @@ assertEquals("Backbone", actual.get(2));
 ```Java
 List<String> list = new List<>("Backbone", "Angular", "React");
 
-List<String> actual = list.orderBy(x -> x);
+List<String> actual = list.orderBy(x -> x).toList();
 
 assertEquals("Angular" , actual.get(0));
 assertEquals("Backbone", actual.get(1));
@@ -103,7 +104,7 @@ assertEquals("React"   , actual.get(2));
 ```Java
 List<String> list = new List<>("Backbone", "Angular", "React");
 
-List<String> actual = list.orderByDescending(x -> x);
+List<String> actual = list.orderByDescending(x -> x).toList();
 
 assertEquals("React"   , actual.get(0));
 assertEquals("Backbone", actual.get(1));
@@ -114,11 +115,11 @@ assertEquals("Angular" , actual.get(2));
 
 ```Java
 List<Person> list = new List<>(
-        new Person("Angular", 3, Arrays.asList("1.0.1", "1.0.2")),
-        new Person("React"  , 1, Arrays.asList("2.0.1", "2.0.2"))
+        new Person("Angular", 3, new List("1.0.1", "1.0.2")),
+        new Person("React"  , 1, new List("2.0.1", "2.0.2"))
 );
 
-List<String> actual = list.selectMany(x -> x.versionHistory.stream());
+List<String> actual = list.selectMany(x -> x.versionHistory).toList();
 
 assertEquals("1.0.1", actual.get(0));
 assertEquals("1.0.2", actual.get(1));
@@ -131,7 +132,7 @@ assertEquals("2.0.2", actual.get(3));
 ```Java
 List<Integer> list = new List<>(1, 2, 3);
 
-List<Integer> actual = list.skip(2);
+List<Integer> actual = list.skip(2).toList();
 
 assertEquals(3, actual.get(0).intValue());
 ```
@@ -141,7 +142,7 @@ assertEquals(3, actual.get(0).intValue());
 ```Java
 List<Integer> list = new List<>(1, 2, 3, 4, 5);
 
-List<Integer> actual = list.skipWhile(x -> x <= 3);
+List<Integer> actual = list.skipWhile(x -> x <= 3).toList();
 
 assertEquals(4, actual.get(0).intValue());
 assertEquals(5, actual.get(1).intValue());
@@ -152,7 +153,7 @@ assertEquals(5, actual.get(1).intValue());
 ```Java
 List<String> list = new List<>("Backbone", "Angular", "React");
 
-List<String> actual = list.take(2);
+List<String> actual = list.take(2).toList();
 
 assertEquals(2, actual.size());
 assertEquals("Backbone", actual.get(0));
@@ -164,7 +165,7 @@ assertEquals("Angular" , actual.get(1));
 ```Java
 List<String> list = new List<>("Backbone", "Angular", "React");
 
-List<String> actual = list.takeWhile(x -> x.equals("Backbone") || x.equals("Angular"));
+List<String> actual = list.takeWhile(x -> x.equals("Backbone") || x.equals("Angular")).toList();
 
 assertEquals(2, actual.size());
 assertEquals("Backbone", actual.get(0));
@@ -176,7 +177,7 @@ assertEquals("Angular" , actual.get(1));
 List<Integer> first  = new List<>(1, 2);
 List<Integer> second = new List<>(2, 3);
 
-List<Integer> actual = first.concat(second);
+List<Integer> actual = first.concat(second).toList();
 
 assertEquals(1, actual.get(0).intValue());
 assertEquals(2, actual.get(1).intValue());
@@ -190,7 +191,7 @@ assertEquals(3, actual.get(3).intValue());
 List<Integer> first  = new List<>(1, 2, 3);
 List<Integer> second = new List<>(1, 3);
 
-List<Integer> actual = first.intersect(second);
+List<Integer> actual = first.intersect(second).toList();
 
 assertEquals(1, actual.get(0).intValue());
 assertEquals(3, actual.get(1).intValue());
@@ -202,7 +203,7 @@ assertEquals(3, actual.get(1).intValue());
 List<Integer> first = new List<>(1, 2, 3);
 List<Integer> second = new List<>(0, 1, 3, 4);
 
-List<Integer> actual = first.union(second);
+List<Integer> actual = first.union(second).toList();
 
 assertEquals(5, actual.size());
 assertEquals(1, actual.get(0).intValue());
@@ -218,7 +219,7 @@ assertEquals(4, actual.get(4).intValue());
 List<Integer> first  = new List<>(1, 2, 3);
 List<Integer> second = new List<>(1, 3);
 
-List<Integer> actual = first.except(second);
+List<Integer> actual = first.except(second).toList();
 
 assertEquals(2, actual.get(0).intValue());
 ```
@@ -228,7 +229,7 @@ assertEquals(2, actual.get(0).intValue());
 ```Java
 List<Integer> list = new List<>(1, 2, 3);
 
-List<Integer> actual = list.reverse();
+List<Integer> actual = list.reverse().toList();
 
 assertEquals(3, actual.get(0).intValue());
 assertEquals(2, actual.get(1).intValue());
@@ -245,7 +246,7 @@ List<Integer> list =
                 1, 2, 3, 4
         );
 
-List<Integer> actual = list.distinct();
+List<Integer> actual = list.distinct().toList();
 
 assertEquals(1, actual.get(0).intValue());
 assertEquals(2, actual.get(1).intValue());
@@ -294,8 +295,8 @@ assertEquals(2.5d, actualLong);
 ```Java
 List<String> list = new List<>("Backbone", "Angular", "React");
 
-long actual = list.count();
-long actualNone = list.count(x -> x.equals("jquery"));
+long actual = list.longCount();
+int actualNone = list.count(x -> x.equals("jquery"));
 
 assertEquals(3, actual);
 assertEquals(0, actualNone);
@@ -306,7 +307,7 @@ assertEquals(0, actualNone);
 ```Java
 List<Double> listDouble = new List<>(1d, 2d, 3d);
 
-double actualDouble = listDouble.maxDouble(x -> x);
+double actualDouble = listDouble.max(x -> x);
 
 assertEquals(3d, actualBigDecimal.doubleValue(), 0);
 ```
@@ -320,7 +321,7 @@ List<BigDecimal> listBigDecimal = new List<>(
         new BigDecimal(3d)
 );
 
-BigDecimal actualBigDecimal = listBigDecimal.minBigDecimal(x -> x);
+BigDecimal actualBigDecimal = listBigDecimal.min(x -> x);
 
 assertEquals(1d, actualBigDecimal.doubleValue(), 0);
 ```
@@ -422,7 +423,7 @@ assertEquals(false, actualNotFound);
 ### Empty
 
 ```Java
-List<Double> actual = List.empty(Double.class);
+List<Double> actual = IEnumerable.empty(Double.class);
 
 assertEquals(0, actual.count());
 ```
@@ -430,7 +431,7 @@ assertEquals(0, actual.count());
 ### Range
 
 ```Java
-List<Integer> actual = List.range(-2, 3);
+List<Integer> actual = IEnumerable.range(-2, 3);
 
 assertEquals(-2, actual.get(0).intValue());
 assertEquals(-1, actual.get(1).intValue());
@@ -440,7 +441,7 @@ assertEquals(0 , actual.get(2).intValue());
 ### Repeat
 
 ```Java
-List<String> actual = List.repeat(String.class, "Law of Cycles", 10);
+List<String> actual = IEnumerable.repeat(String.class, "Law of Cycles", 10);
 
 assertEquals(10, actual.count());
 assertEquals("Law of Cycles", actual.get(9));
@@ -465,7 +466,7 @@ assertEquals(false, actualUnMatchElm);
 ```Java
 List<Object> list = new List<>(1, 2, 3);
 
-List<Integer> actual = list.cast(Integer.class);
+List<Integer> actual = list.cast(Integer.class).toList();
 
 assertEquals(1, actual.get(0).intValue());
 assertEquals(2, actual.get(1).intValue());
@@ -477,8 +478,8 @@ assertEquals(3, actual.get(2).intValue());
 ```Java
 List<Object> list = new List<>(1, "2", 3, "4");
 
-List<String>  actualStr = list.ofType(String.class);
-List<Integer> actualInt = list.ofType(Integer.class);
+List<String>  actualStr = list.ofType(String.class).toList();
+List<Integer> actualInt = list.ofType(Integer.class).toList();
 
 assertEquals("2", actualStr.get(0));
 assertEquals("4", actualStr.get(1));
@@ -488,6 +489,6 @@ assertEquals(3  , actualInt.get(1).intValue());
 
 #Reference
 
-[1] Microsoft Reference Source, "Enumerable.cs", http://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs
-[2] GitHub, "javaLinq", https://github.com/sircodesalotOfTheRound/javaLinq
-[3] Qiita, "LINQ to Objects と Java8-Stream API の対応表", http://qiita.com/amay077/items/9d2941283c4a5f61f302
+1. Microsoft Reference Source, "Enumerable.cs", http://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs
+1. GitHub, "javaLinq", https://github.com/sircodesalotOfTheRound/javaLinq
+1. Qiita, "LINQ to Objects と Java8-Stream API の対応表", http://qiita.com/amay077/items/9d2941283c4a5f61f302
