@@ -10,12 +10,11 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * Created by sircodesalot
+ * Created by Reuben Kuhnert
  * Modified by Keisuke Kato
  */
 public interface IEnumerable<TSource> extends Iterable<TSource> {
-
-// -------------------------- OTHER METHODS --------------------------
+// -------------------------- STATIC METHODS --------------------------
 
     /**
      * ﻿Generates a sequence of integral numbers within a specified range.
@@ -75,6 +74,8 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         return new List<>();
     }
 
+// -------------------------- OTHER METHODS --------------------------
+
     /**
      * ﻿Applies an accumulator function over a sequence.
      *
@@ -95,6 +96,17 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         }
 
         return result;
+    }
+
+    /**
+     * ﻿Returns the number of elements in a sequence.
+     *
+     * @return ﻿﻿The number of elements in the input sequence.
+     */
+    default int count() {
+        int count = 0;
+        for (TSource item : this) count++;
+        return count;
     }
 
     /**
@@ -231,23 +243,6 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
-     * ﻿Casts the elements of a IEnumerable to the specified type.
-     *
-     * @param toType    ﻿The type to cast the elements of source to.
-     * @param <TResult> ﻿The type to cast the elements of source to.
-     * @return ﻿An <TResult> that contains each element of
-     * ﻿the source sequence cast to the specified type.
-     * @throws IllegalArgumentException      toType is null.
-     * @throws UnsupportedOperationException ﻿source contains no elements.
-     */
-    default <TResult> IEnumerable<TResult> cast(final Class<TResult> toType) throws IllegalArgumentException, UnsupportedOperationException {
-        if (toType == null) throw new IllegalArgumentException("toType is null.");
-        if (this.count() == 0) throw new UnsupportedOperationException("source contains no elements.");
-
-        return new MapEnumerableIterator<>(this, item -> (TResult) item);
-    }
-
-    /**
      * ﻿Concatenates two sequences.
      *
      * @param second ﻿The sequence to concatenate to the first sequence.
@@ -262,58 +257,6 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         for (TSource item : second) allItems.add(item);
 
         return allItems;
-    }
-
-    /**
-     * ﻿Returns the number of elements in a sequence.
-     *
-     * @return ﻿﻿The number of elements in the input sequence.
-     */
-    default int count() {
-        int count = 0;
-        for (TSource item : this) count++;
-        return count;
-    }
-
-    /**
-     * ﻿Returns a number that represents how many elements in the specified sequence
-     * ﻿satisfy a condition.
-     *
-     * @param predicate ﻿A function to test each element for a condition.
-     * @return ﻿A number that represents how many elements in the sequence satisfy the condition
-     * ﻿in the predicate function.
-     * @throws IllegalArgumentException predicate is null.
-     */
-    default int count(final Predicate<TSource> predicate) throws IllegalArgumentException {
-        if (predicate == null) throw new IllegalArgumentException("predicate is null.");
-
-        return this.where(predicate).count();
-    }
-
-    /**
-     * ﻿Returns the number of elements in a sequence.
-     *
-     * @return ﻿﻿The number of elements in the input sequence.
-     */
-    default long longCount() {
-        long count = 0;
-        for (TSource item : this) count++;
-        return count;
-    }
-
-    /**
-     * ﻿Returns a number that represents how many elements in the specified sequence
-     * ﻿satisfy a condition.
-     *
-     * @param predicate ﻿A function to test each element for a condition.
-     * @return ﻿A number that represents how many elements in the sequence satisfy the condition
-     * ﻿in the predicate function.
-     * @throws IllegalArgumentException predicate is null.
-     */
-    default long longCount(final Predicate<TSource> predicate) throws IllegalArgumentException {
-        if (predicate == null) throw new IllegalArgumentException("predicate is null.");
-
-        return where(predicate).longCount();
     }
 
     /**
@@ -360,6 +303,20 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
+     * ﻿Returns the element at a specified index in a sequence or a default value
+     * ﻿if the index is out of range.
+     *
+     * @param index ﻿The zero-based index of the element to retrieve.
+     * @return ﻿default(TSource) if the index is outside the bounds of the source sequence    { return null;}
+     * ﻿otherwise, the element at the specified position in the source sequence.
+     */
+    default TSource elementAtOrDefault(final int index) {
+        return (index < 0 || this.count() < index + 1)
+                ? null
+                : this.elementAt(index);
+    }
+
+    /**
      * ﻿Returns the element at a specified index in a sequence.
      *
      * @param index ﻿The zero-based index of the element to retrieve.
@@ -383,20 +340,6 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         }
 
         return returnValue;
-    }
-
-    /**
-     * ﻿Returns the element at a specified index in a sequence or a default value
-     * ﻿if the index is out of range.
-     *
-     * @param index ﻿The zero-based index of the element to retrieve.
-     * @return ﻿default(TSource) if the index is outside the bounds of the source sequence    { return null;}
-     * ﻿otherwise, the element at the specified position in the source sequence.
-     */
-    default TSource elementAtOrDefault(final int index) {
-        return (index < 0 || this.count() < index + 1)
-                ? null
-                : this.elementAt(index);
     }
 
     /**
@@ -527,6 +470,41 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
+     * ﻿Projects each element of a sequence into a new form.
+     *
+     * @param selector  ﻿A transform function to apply to each element.
+     * @param <TResult> ﻿The type of the value returned by selector.
+     * @return ﻿An IEnumerable<TResult> whose elements are the result
+     * ﻿of invoking the transform function on each element of source.
+     * @throws IllegalArgumentException ﻿selector is null.
+     */
+    default <TResult> IEnumerable<TResult> select(final Function<TSource, TResult> selector) throws IllegalArgumentException {
+        if (selector == null) throw new IllegalArgumentException("selector is null.");
+
+        return () -> {
+            java.util.Queue<TResult> queue = new ArrayDeque<>();
+
+            final Iterator<TSource> iterator = this.iterator();
+            while (iterator.hasNext()) {
+                TSource item = iterator.next();
+                queue.add(selector.apply(item));
+            }
+
+            return new Iterator<TResult>() {
+                @Override
+                public boolean hasNext() {
+                    return queue.size() != 0;
+                }
+
+                @Override
+                public TResult next() {
+                    return queue.remove();
+                }
+            };
+        };
+    }
+
+    /**
      * ﻿Produces the set intersection of two sequences by using the default equality
      * ﻿comparer to compare values.
      *
@@ -595,6 +573,21 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
+     * ﻿Returns a number that represents how many elements in the specified sequence
+     * ﻿satisfy a condition.
+     *
+     * @param predicate ﻿A function to test each element for a condition.
+     * @return ﻿A number that represents how many elements in the sequence satisfy the condition
+     * ﻿in the predicate function.
+     * @throws IllegalArgumentException predicate is null.
+     */
+    default long longCount(final Predicate<TSource> predicate) throws IllegalArgumentException {
+        if (predicate == null) throw new IllegalArgumentException("predicate is null.");
+
+        return where(predicate).longCount();
+    }
+
+    /**
      * ﻿﻿﻿Returns the last element of a sequence, or a default value if the sequence
      * ﻿contains no elements.
      *
@@ -642,6 +635,17 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         }
 
         return returnValue;
+    }
+
+    /**
+     * ﻿Returns the number of elements in a sequence.
+     *
+     * @return ﻿﻿The number of elements in the input sequence.
+     */
+    default long longCount() {
+        long count = 0;
+        for (TSource item : this) count++;
+        return count;
     }
 
     /**
@@ -711,8 +715,8 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     /**
      * ﻿Filters the elements of an IEnumerable based on a specified ﻿type.
      *
-     * @param type ﻿The type to filter the elements of the sequence on.
-     * @param <TResult>  ﻿The type to filter the elements of the sequence on.
+     * @param type      ﻿The type to filter the elements of the sequence on.
+     * @param <TResult> ﻿The type to filter the elements of the sequence on.
      * @return ﻿An IEnumerable<TSource> that contains elements from ﻿the input sequence of type TResult.
      * @throws IllegalArgumentException type is null.
      */
@@ -720,6 +724,23 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         if (type == null) throw new IllegalArgumentException("type is null.");
 
         return this.where(x -> type.isAssignableFrom(x.getClass())).cast(type);
+    }
+
+    /**
+     * ﻿Casts the elements of a IEnumerable to the specified type.
+     *
+     * @param toType    ﻿The type to cast the elements of source to.
+     * @param <TResult> ﻿The type to cast the elements of source to.
+     * @return ﻿An <TResult> that contains each element of
+     * ﻿the source sequence cast to the specified type.
+     * @throws IllegalArgumentException      toType is null.
+     * @throws UnsupportedOperationException ﻿source contains no elements.
+     */
+    default <TResult> IEnumerable<TResult> cast(final Class<TResult> toType) throws IllegalArgumentException, UnsupportedOperationException {
+        if (toType == null) throw new IllegalArgumentException("toType is null.");
+        if (this.count() == 0) throw new UnsupportedOperationException("source contains no elements.");
+
+        return new MapEnumerableIterator<>(this, item -> (TResult) item);
     }
 
     /**
@@ -797,41 +818,6 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
                 @Override
                 public TSource next() {
                     return stack.pop();
-                }
-            };
-        };
-    }
-
-    /**
-     * ﻿Projects each element of a sequence into a new form.
-     *
-     * @param selector  ﻿A transform function to apply to each element.
-     * @param <TResult> ﻿The type of the value returned by selector.
-     * @return ﻿An IEnumerable<TResult> whose elements are the result
-     * ﻿of invoking the transform function on each element of source.
-     * @throws IllegalArgumentException ﻿selector is null.
-     */
-    default <TResult> IEnumerable<TResult> select(final Function<TSource, TResult> selector) throws IllegalArgumentException {
-        if (selector == null) throw new IllegalArgumentException("selector is null.");
-
-        return () -> {
-            java.util.Queue<TResult> queue = new ArrayDeque<>();
-
-            final Iterator<TSource> iterator = this.iterator();
-            while (iterator.hasNext()) {
-                TSource item = iterator.next();
-                queue.add(selector.apply(item));
-            }
-
-            return new Iterator<TResult>() {
-                @Override
-                public boolean hasNext() {
-                    return queue.size() != 0;
-                }
-
-                @Override
-                public TResult next() {
-                    return queue.remove();
                 }
             };
         };
@@ -1011,7 +997,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
             }
 
             java.util.Queue<TSource> queue = new ArrayDeque<>();
-            while(iterator.hasNext()) {
+            while (iterator.hasNext()) {
                 queue.add(iterator.next());
             }
 
@@ -1047,7 +1033,6 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
 
             final boolean none = (this.count(predicate) == this.count());
             if (!none) {
-
                 final Iterator<TSource> iterator = this.iterator();
                 TSource item = null;
                 while (iterator.hasNext()) {
@@ -1075,6 +1060,21 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
                 }
             };
         };
+    }
+
+    /**
+     * ﻿Returns a number that represents how many elements in the specified sequence
+     * ﻿satisfy a condition.
+     *
+     * @param predicate ﻿A function to test each element for a condition.
+     * @return ﻿A number that represents how many elements in the sequence satisfy the condition
+     * ﻿in the predicate function.
+     * @throws IllegalArgumentException predicate is null.
+     */
+    default int count(final Predicate<TSource> predicate) throws IllegalArgumentException {
+        if (predicate == null) throw new IllegalArgumentException("predicate is null.");
+
+        return this.where(predicate).count();
     }
 
     /**
@@ -1187,7 +1187,6 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
 
             final boolean none = (this.count(predicate) == 0);
             if (!none) {
-
                 final Iterator<TSource> iterator = this.iterator();
                 while (iterator.hasNext()) {
                     final TSource item = iterator.next();
@@ -1208,6 +1207,15 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
                 }
             };
         };
+    }
+
+    /**
+     * Creates a List<TSource> from an IEnumerable<TSource>.
+     *
+     * @return A List<TSource> that contains elements from the input sequence.
+     */
+    default List<TSource> toList() {
+        return new List<>(this);
     }
 
     /**
@@ -1240,14 +1248,4 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
 
         return new WhereEnumerableIterator<>(this, predicate);
     }
-
-    /**
-     * Creates a List<TSource> from an IEnumerable<TSource>.
-     *
-     * @return A List<TSource> that contains elements from the input sequence.
-     */
-    default List<TSource> toList() {
-        return new List<>(this);
-    }
-
 }

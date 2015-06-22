@@ -4,22 +4,33 @@ import java.util.Iterator;
 import java.util.function.Predicate;
 
 /**
- * Created by sircodesalot
+ * Created by Reuben Kuhnert
  * Modified by Keisuke Kato
  */
 public class WhereEnumerableIterator<TSource> implements IEnumerable<TSource> {
+// ------------------------------ FIELDS ------------------------------
+
     private final IEnumerable<TSource> iterable;
     private final Predicate<TSource> predicate;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public WhereEnumerableIterator(IEnumerable<TSource> iterable, Predicate<TSource> predicate) {
         this.iterable = iterable;
         this.predicate = predicate;
     }
 
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface Iterable ---------------------
+
     @Override
     public Iterator<TSource> iterator() {
         return new WhereIterator(iterable, predicate);
     }
+
+// -------------------------- INNER CLASSES --------------------------
 
     public class WhereIterator implements Iterator<TSource> {
         private final Iterator<TSource> iterator;

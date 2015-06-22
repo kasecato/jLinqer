@@ -7,12 +7,15 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 /**
- * Created by sircodesalot
+ * Created by Reuben Kuhnert
  * Modified by Keisuke Kato
  */
 public class Set<TSource> implements IEnumerable<TSource>, java.util.Set<TSource> {
+// ------------------------------ FIELDS ------------------------------
 
     private java.util.Set<TSource> set = new LinkedHashSet<>();
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public Set() {
     }
@@ -23,15 +26,16 @@ public class Set<TSource> implements IEnumerable<TSource>, java.util.Set<TSource
         }
     }
 
-    public Set(IEnumerable<TSource> items) {
-        for (TSource item : items) this.add(item);
-    }
-
-
     @Override
     public boolean add(final TSource t) {
         return set.add(t);
     }
+
+    public Set(IEnumerable<TSource> items) {
+        for (TSource item : items) this.add(item);
+    }
+
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public boolean equals(Object o) {
@@ -43,6 +47,10 @@ public class Set<TSource> implements IEnumerable<TSource>, java.util.Set<TSource
         return set.hashCode();
     }
 
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface Collection ---------------------
 
     @Override
     public int size() {
@@ -85,13 +93,13 @@ public class Set<TSource> implements IEnumerable<TSource>, java.util.Set<TSource
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
-        return set.removeAll(c);
+    public boolean retainAll(Collection<?> c) {
+        return set.retainAll(c);
     }
 
     @Override
-    public boolean retainAll(Collection<?> c) {
-        return set.retainAll(c);
+    public boolean removeAll(Collection<?> c) {
+        return set.removeAll(c);
     }
 
     @Override
@@ -99,13 +107,10 @@ public class Set<TSource> implements IEnumerable<TSource>, java.util.Set<TSource
         set.clear();
     }
 
-
 // --------------------- Interface Iterable ---------------------
 
     @Override
     public Iterator<TSource> iterator() {
         return set.iterator();
     }
-
-
 }

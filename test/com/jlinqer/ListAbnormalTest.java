@@ -355,7 +355,6 @@ public class ListAbnormalTest {
         } catch (Exception e) {
             assertThat(e, instanceOf(UnsupportedOperationException.class));
         }
-
     }
 
     @Test
@@ -376,7 +375,6 @@ public class ListAbnormalTest {
         } catch (Exception e) {
             assertThat(e, instanceOf(UnsupportedOperationException.class));
         }
-
     }
 
     @Test

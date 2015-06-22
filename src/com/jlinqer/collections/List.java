@@ -8,18 +8,26 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 /**
- * Created by sircodesalot
+ * Created by Reuben Kuhnert
  * Modified by Keisuke Kato
  */
 public class List<TSource> implements IEnumerable<TSource>, java.util.List<TSource> {
+// ------------------------------ FIELDS ------------------------------
 
     private java.util.List<TSource> list = new LinkedList<>();
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public List() {
     }
 
     public List(TSource... items) {
         for (TSource item : items) this.add(item);
+    }
+
+    @Override
+    public boolean add(final TSource t) {
+        return list.add(t);
     }
 
     public List(IEnumerable<TSource> items) {
@@ -30,10 +38,7 @@ public class List<TSource> implements IEnumerable<TSource>, java.util.List<TSour
         this.list = list;
     }
 
-    @Override
-    public boolean add(final TSource t) {
-        return list.add(t);
-    }
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public boolean equals(Object o) {
@@ -45,6 +50,10 @@ public class List<TSource> implements IEnumerable<TSource>, java.util.List<TSour
         return list.hashCode();
     }
 
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface Collection ---------------------
 
     @Override
     public int size() {
@@ -100,7 +109,6 @@ public class List<TSource> implements IEnumerable<TSource>, java.util.List<TSour
     public void clear() {
         list.clear();
     }
-
 
 // --------------------- Interface Iterable ---------------------
 
