@@ -102,10 +102,13 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Returns the number of elements in a sequence.
      *
      * @return ﻿﻿The number of elements in the input sequence.
+     * @throws ArithmeticException ﻿The number of elements in source is larger than Integer.MaxValue.
      */
-    default int count() {
+    default int count() throws ArithmeticException {
         int count = 0;
-        for (TSource item : this) count++;
+        for (TSource item : this) {
+            count = Math.addExact(count, 1);
+        }
         return count;
     }
 
@@ -202,16 +205,17 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * @return ﻿﻿The average of the sequence of values.
      * @throws IllegalArgumentException      selector is null.
      * @throws UnsupportedOperationException ﻿source contains no elements.
+     * @throws ArithmeticException           ﻿The sum of the elements in the sequence is larger than Integer.MaxValue.
      */
-    default double averageInt(final Function<TSource, Integer> selector) throws IllegalArgumentException, UnsupportedOperationException {
+    default double averageInt(final Function<TSource, Integer> selector) throws IllegalArgumentException, UnsupportedOperationException, ArithmeticException {
         if (selector == null) throw new IllegalArgumentException("selector is null.");
         if (this.count() == 0) throw new UnsupportedOperationException("source contains no elements.");
 
-        double sum = 0;
+        int sum = 0;
         long count = 0;
 
         for (TSource item : this) {
-            sum += selector.apply(item);
+            sum = Math.addExact(sum, selector.apply(item));
             count++;
         }
 
@@ -226,16 +230,17 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * @return ﻿The average of the sequence of values.
      * @throws IllegalArgumentException      selector is null.
      * @throws UnsupportedOperationException ﻿source contains no elements.
+     * @throws ArithmeticException           ﻿The sum of the elements in the sequence is larger than Long.MaxValue.
      */
-    default double averageLong(final Function<TSource, Long> selector) throws IllegalArgumentException, UnsupportedOperationException {
+    default double averageLong(final Function<TSource, Long> selector) throws IllegalArgumentException, UnsupportedOperationException, ArithmeticException {
         if (selector == null) throw new IllegalArgumentException("selector is null.");
         if (this.count() == 0) throw new UnsupportedOperationException("source contains no elements.");
 
-        double sum = 0;
+        long sum = 0;
         long count = 0;
 
         for (TSource item : this) {
-            sum += selector.apply(item);
+            sum = Math.addExact(sum, selector.apply(item));
             count++;
         }
 
@@ -488,9 +493,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         return () -> {
             java.util.Queue<TResult> queue = new ArrayDeque<>();
 
-            final Iterator<TSource> iterator = this.iterator();
-            while (iterator.hasNext()) {
-                TSource item = iterator.next();
+            for (TSource item : this) {
                 queue.add(selector.apply(item));
             }
 
@@ -587,8 +590,9 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * @return ﻿A number that represents how many elements in the sequence satisfy the condition
      * ﻿in the predicate function.
      * @throws IllegalArgumentException predicate is null.
+     * @throws ArithmeticException      ﻿The number of elements exceeds Long.MaxValue.
      */
-    default long longCount(final Predicate<TSource> predicate) throws IllegalArgumentException {
+    default long longCount(final Predicate<TSource> predicate) throws IllegalArgumentException, ArithmeticException {
         if (predicate == null) throw new IllegalArgumentException("predicate is null.");
 
         return where(predicate).longCount();
@@ -648,10 +652,13 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Returns the number of elements in a sequence.
      *
      * @return ﻿﻿The number of elements in the input sequence.
+     * @throws ArithmeticException ﻿The number of elements exceeds Long.MaxValue.
      */
-    default long longCount() {
+    default long longCount() throws ArithmeticException{
         long count = 0;
-        for (TSource item : this) count++;
+        for (TSource item : this) {
+            count = Math.addExact(count, 1);
+        }
         return count;
     }
 
@@ -762,20 +769,17 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     default <TKey extends Comparable> IEnumerable<TSource> orderBy(final Function<TSource, TKey> keySelector) throws IllegalArgumentException {
         if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
 
-        java.util.List items = new ArrayList<TSource>();
+        java.util.List<TSource> items = new ArrayList<>();
         for (TSource item : this) items.add(item);
 
-        items.sort(new Comparator<TSource>() {
-            @Override
-            public int compare(final TSource second, final TSource first) {
-                final TKey firstProperty = keySelector.apply(first);
-                final TKey secondProperty = keySelector.apply(second);
+        items.sort((second, first) -> {
+            final TKey firstProperty = keySelector.apply(first);
+            final TKey secondProperty = keySelector.apply(second);
 
-                return secondProperty.compareTo(firstProperty);
-            }
+            return secondProperty.compareTo(firstProperty);
         });
 
-        return () -> items.iterator();
+        return items::iterator;
     }
 
     /**
@@ -790,20 +794,17 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     default <TKey extends Comparable> IEnumerable<TSource> orderByDescending(final Function<TSource, TKey> keySelector) throws IllegalArgumentException {
         if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
 
-        java.util.List items = new ArrayList<TSource>();
+        java.util.List<TSource> items = new ArrayList<>();
         for (TSource item : this) items.add(item);
 
-        items.sort(new Comparator<TSource>() {
-            @Override
-            public int compare(final TSource second, final TSource first) {
-                final TKey firstProperty = keySelector.apply(first);
-                final TKey secondProperty = keySelector.apply(second);
+        items.sort((second, first) -> {
+            final TKey firstProperty = keySelector.apply(first);
+            final TKey secondProperty = keySelector.apply(second);
 
-                return firstProperty.compareTo(secondProperty);
-            }
+            return firstProperty.compareTo(secondProperty);
         });
 
-        return () -> items.iterator();
+        return items::iterator;
     }
 
     /**
@@ -844,13 +845,10 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         return () -> {
             java.util.Queue<TResult> queue = new ArrayDeque<>();
 
-            final Iterator<TSource> iterator = this.iterator();
-            while (iterator.hasNext()) {
-                TSource item = iterator.next();
+            for (TSource item : this) {
                 final IEnumerable<TResult> selected = selector.apply(item);
-                final Iterator<TResult> selectedIterator = selected.iterator();
-                while (selectedIterator.hasNext()) {
-                    queue.add(selectedIterator.next());
+                for (TResult aSelected : selected) {
+                    queue.add(aSelected);
                 }
             }
 
@@ -1077,8 +1075,9 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * @return ﻿A number that represents how many elements in the sequence satisfy the condition
      * ﻿in the predicate function.
      * @throws IllegalArgumentException predicate is null.
+     * @throws ArithmeticException      ﻿The number of elements in source is larger than Integer.MaxValue.
      */
-    default int count(final Predicate<TSource> predicate) throws IllegalArgumentException {
+    default int count(final Predicate<TSource> predicate) throws IllegalArgumentException, ArithmeticException {
         if (predicate == null) throw new IllegalArgumentException("predicate is null.");
 
         return this.where(predicate).count();
@@ -1089,8 +1088,8 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿by invoking a transform function on each element of the input sequence.
      *
      * @param selector ﻿A transform function to apply to each element.
-     * @return ﻿selector is null.
-     * @throws IllegalArgumentException
+     * @return ﻿The sum of the values in the sequence.
+     * @throws IllegalArgumentException selector is null.
      */
     default BigDecimal sumBigDecimal(final Function<TSource, BigDecimal> selector) throws IllegalArgumentException {
         if (selector == null) throw new IllegalArgumentException("selector is null.");
@@ -1105,8 +1104,8 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿by invoking a transform function on each element of the input sequence.
      *
      * @param selector ﻿A transform function to apply to each element.
-     * @return ﻿selector is null.
-     * @throws IllegalArgumentException
+     * @return ﻿The sum of the values in the sequence.
+     * @throws IllegalArgumentException ﻿selector is null.
      */
     default double sumDouble(final Function<TSource, Double> selector) throws IllegalArgumentException {
         if (selector == null) throw new IllegalArgumentException("selector is null.");
@@ -1121,14 +1120,17 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿by invoking a transform function on each element of the input sequence.
      *
      * @param selector ﻿A transform function to apply to each element.
-     * @return ﻿selector is null.
-     * @throws IllegalArgumentException
+     * @return ﻿﻿The sum of the values in the sequence.
+     * @throws IllegalArgumentException selector is null.
+     * @throws ArithmeticException      ﻿The sum is larger than Integer.MaxValue.
      */
-    default int sumInt(final Function<TSource, Integer> selector) throws IllegalArgumentException {
+    default int sumInt(final Function<TSource, Integer> selector) throws IllegalArgumentException, ArithmeticException {
         if (selector == null) throw new IllegalArgumentException("selector is null.");
 
         int sum = 0;
-        for (TSource item : this) sum += selector.apply(item);
+        for (TSource item : this) {
+            sum = Math.addExact(sum, selector.apply(item));
+        }
         return sum;
     }
 
@@ -1137,14 +1139,17 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿by invoking a transform function on each element of the input sequence.
      *
      * @param selector ﻿A transform function to apply to each element.
-     * @return ﻿selector is null.
-     * @throws IllegalArgumentException
+     * @return ﻿﻿The sum of the values in the sequence.
+     * @throws IllegalArgumentException selector is null.
+     * @throws ArithmeticException      ﻿The sum is larger than Integer.MaxValue.
      */
-    default long sumLong(final Function<TSource, Long> selector) throws IllegalArgumentException {
+    default long sumLong(final Function<TSource, Long> selector) throws IllegalArgumentException, ArithmeticException {
         if (selector == null) throw new IllegalArgumentException("selector is null.");
 
         long sum = 0l;
-        for (TSource item : this) sum += selector.apply(item);
+        for (TSource item : this) {
+            sum = Math.addExact(sum, selector.apply(item));
+        }
         return sum;
     }
 
@@ -1194,9 +1199,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
 
             final boolean none = (this.count(predicate) == 0);
             if (!none) {
-                final Iterator<TSource> iterator = this.iterator();
-                while (iterator.hasNext()) {
-                    final TSource item = iterator.next();
+                for (TSource item : this) {
                     if (!predicate.test(item)) break;
                     queue.add(item);
                 }

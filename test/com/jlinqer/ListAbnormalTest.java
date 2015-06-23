@@ -138,6 +138,42 @@ public class ListAbnormalTest {
     }
 
     @Test
+    public void average_overflow() throws Exception {
+        // arrange
+        List<Integer> listOverflowInt = new List<>(Integer.MAX_VALUE, 1);
+        List<Integer> listUnderflowInt = new List<>(Integer.MIN_VALUE, -1);
+        List<Long> listOverflowLong = new List<>(Long.MAX_VALUE, 1l);
+        List<Long> listUnderflowLong = new List<>(Long.MIN_VALUE, -1l);
+
+        // act and assert
+        try {
+            listOverflowInt.averageInt(x -> x);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(ArithmeticException.class));
+        }
+        try {
+            listUnderflowInt.averageInt(x -> x);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(ArithmeticException.class));
+        }
+
+        try {
+            listOverflowLong.averageLong(x -> x);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(ArithmeticException.class));
+        }
+        try {
+            listUnderflowLong.averageLong(x -> x);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(ArithmeticException.class));
+        }
+    }
+
+    @Test
     public void cast_abnormal() throws Exception {
         // arrange
         List<Object> list = new List<>();
@@ -179,6 +215,13 @@ public class ListAbnormalTest {
         // act and assert
         try {
             list.count(null);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+        try {
+            list.longCount(null);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));
@@ -574,6 +617,42 @@ public class ListAbnormalTest {
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void sum_overflow() throws Exception {
+        // arrange
+        List<Integer> listOverflowInt = new List<>(Integer.MAX_VALUE, 1);
+        List<Integer> listUnderflowInt = new List<>(Integer.MIN_VALUE, -1);
+        List<Long> listOverflowLong = new List<>(Long.MAX_VALUE, 1l);
+        List<Long> listUnderflowLong = new List<>(Long.MIN_VALUE, -1l);
+
+        // act and assert
+        try {
+            listOverflowInt.sumInt(x -> x);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(ArithmeticException.class));
+        }
+        try {
+            listUnderflowInt.sumInt(x -> x);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(ArithmeticException.class));
+        }
+
+        try {
+            listOverflowLong.sumLong(x -> x);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(ArithmeticException.class));
+        }
+        try {
+            listUnderflowLong.sumLong(x -> x);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(ArithmeticException.class));
         }
     }
 

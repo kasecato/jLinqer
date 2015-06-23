@@ -7,7 +7,7 @@ import java.util.function.Predicate;
  * Created by Reuben Kuhnert
  * Modified by Keisuke Kato
  */
-public class WhereEnumerableIterator<TSource> implements IEnumerable<TSource> {
+class WhereEnumerableIterator<TSource> implements IEnumerable<TSource> {
 // ------------------------------ FIELDS ------------------------------
 
     private final IEnumerable<TSource> iterable;
