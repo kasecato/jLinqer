@@ -43,7 +43,7 @@
 | SingleOrDefault | [singleOrDefault](#singleOrDefault) | n/a |
 | DefaultIfEmpty | [defaultIfEmpty](#defaultIfEmpty) | n/a |
 | ElementAt | [elementAt](#elementAt) | n/a |
-| ElementAtOrDefalut | [elementAtOrDefalut](#elementAtOrDefault) | n/a |
+| ElementAtOrDefault | [elementAtOrDefault](#elementAtOrDefault) | n/a |
 | All | [all](#all) | allMatch |
 | Any | [any](#any) | anyMatch |
 |||||

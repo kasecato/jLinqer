@@ -2,10 +2,7 @@ package com.jlinqer.collections;
 
 import com.jlinqer.linq.IEnumerable;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * Created by Reuben Kuhnert
@@ -21,8 +18,9 @@ public class List<TSource> implements IEnumerable<TSource>, java.util.List<TSour
     public List() {
     }
 
+    @SafeVarargs
     public List(TSource... items) {
-        for (TSource item : items) this.add(item);
+        Collections.addAll(this, items);
     }
 
     @Override

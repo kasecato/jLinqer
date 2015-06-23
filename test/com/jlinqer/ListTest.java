@@ -120,14 +120,22 @@ public class ListTest {
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act
-        long actual = list.count();
-        long actualOne = list.count(x -> x.equals("React"));
-        long actualZero = list.count(x -> x.equals("jquery"));
+        int actual = list.count();
+        int actualOne = list.count(x -> x.equals("React"));
+        int actualZero = list.count(x -> x.equals("jquery"));
+
+        long actualLong = list.longCount();
+        long actualOneLong = list.longCount(x -> x.equals("React"));
+        long actualZeroLong = list.longCount(x -> x.equals("jquery"));
 
         // assert
         assertEquals(3, actual);
         assertEquals(1, actualOne);
         assertEquals(0, actualZero);
+
+        assertEquals(3, actualLong);
+        assertEquals(1, actualOneLong);
+        assertEquals(0, actualZeroLong);
     }
 
     @Test
@@ -221,9 +229,11 @@ public class ListTest {
 
         // act
         int actual = list.first();
+        int actualMatch = list.first(x -> x == 2);
 
         // assert
         assertEquals(1, actual);
+        assertEquals(2, actualMatch);
     }
 
     @Test

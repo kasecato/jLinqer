@@ -7,7 +7,7 @@ import java.util.function.Function;
  * Created by Reuben Kuhnert
  * Modified by Keisuke Kato
  */
-public class MapEnumerableIterator<TSource, TResult> implements IEnumerable<TResult> {
+class MapEnumerableIterator<TSource, TResult> implements IEnumerable<TResult> {
 // ------------------------------ FIELDS ------------------------------
 
     private final Function<TSource, TResult> projection;

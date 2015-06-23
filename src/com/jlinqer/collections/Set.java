@@ -3,6 +3,7 @@ package com.jlinqer.collections;
 import com.jlinqer.linq.IEnumerable;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
@@ -20,9 +21,10 @@ public class Set<TSource> implements IEnumerable<TSource>, java.util.Set<TSource
     public Set() {
     }
 
+    @SafeVarargs
     public Set(TSource... items) {
         if (items != null) {
-            for (TSource item : items) this.add(item);
+            Collections.addAll(this, items);
         }
     }
 
