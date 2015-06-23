@@ -252,11 +252,13 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     default IEnumerable<TSource> concat(final IEnumerable<TSource> second) throws IllegalArgumentException {
         if (second == null) throw new IllegalArgumentException("second is null.");
 
-        List<TSource> allItems = new List<>();
-        for (TSource item : this) allItems.add(item);
-        for (TSource item : second) allItems.add(item);
+        return () -> {
+            List<TSource> allItems = new List<>();
+            for (TSource item : this) allItems.add(item);
+            for (TSource item : second) allItems.add(item);
 
-        return allItems;
+            return allItems.iterator();
+        };
     }
 
     /**
@@ -354,22 +356,24 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     default IEnumerable<TSource> except(final Iterable<TSource> second) throws IllegalArgumentException {
         if (second == null) throw new IllegalArgumentException("second is null.");
 
-        Set<TSource> exceptItems;
-        if (second instanceof Set)
-            exceptItems = (Set<TSource>) second;
-        else {
-            exceptItems = new Set<>();
-            for (TSource item : second) exceptItems.add(item);
-        }
-
-        List<TSource> subSet = new List<>();
-        for (TSource item : this) {
-            if (!exceptItems.contains(item)) {
-                subSet.add(item);
+        return () -> {
+            Set<TSource> exceptItems;
+            if (second instanceof Set)
+                exceptItems = (Set<TSource>) second;
+            else {
+                exceptItems = new Set<>();
+                for (TSource item : second) exceptItems.add(item);
             }
-        }
 
-        return subSet;
+            List<TSource> subSet = new List<>();
+            for (TSource item : this) {
+                if (!exceptItems.contains(item)) {
+                    subSet.add(item);
+                }
+            }
+
+            return subSet.iterator();
+        };
     }
 
     /**
@@ -515,15 +519,18 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     default IEnumerable<TSource> intersect(final IEnumerable<TSource> second) throws IllegalArgumentException {
         if (second == null) throw new IllegalArgumentException("second is null.");
 
-        Set<TSource> first;
-        if (second instanceof Set) first = (Set<TSource>) second;
-        else {
-            first = new Set<>();
-            for (TSource item : second) {
-                first.add(item);
+        return () -> {
+            Set<TSource> first;
+            if (second instanceof Set) first = (Set<TSource>) second;
+            else {
+                first = new Set<>();
+                for (TSource item : second) {
+                    first.add(item);
+                }
             }
-        }
-        return first;
+
+            return first.iterator();
+        };
     }
 
     /**
@@ -1228,11 +1235,13 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     default IEnumerable<TSource> union(final IEnumerable<TSource> second) throws IllegalArgumentException {
         if (second == null) throw new IllegalArgumentException("second is null.");
 
-        Set<TSource> allItems = new Set<>();
-        for (TSource item : this) allItems.add(item);
-        for (TSource item : second) allItems.add(item);
+        return () -> {
+            Set<TSource> allItems = new Set<>();
+            for (TSource item : this) allItems.add(item);
+            for (TSource item : second) allItems.add(item);
 
-        return allItems;
+            return allItems.iterator();
+        };
     }
 
     /**
