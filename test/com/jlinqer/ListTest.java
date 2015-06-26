@@ -684,6 +684,70 @@ public class ListTest {
     }
 
     @Test
+    public void thenBy() throws Exception {
+        // arrange
+        class Javascript {
+            String name;
+            int age;
+            String version;
+
+            Javascript(String name, int age, String version) {
+                this.name = name;
+                this.age = age;
+                this.version = version;
+            }
+        }
+
+        List<Javascript> list = new List<>(
+                new Javascript("Angular2", 2, "b"),
+                new Javascript("Angular2", 2, "a"),
+                new Javascript("Angular1", 2, "c"),
+                new Javascript("React", 1, "d")
+        );
+
+        // act
+        List<Javascript> actual = list.orderBy(x -> x.age).thenBy(x -> x.name).thenBy(x -> x.version).toList();
+
+        // assert
+        assertEquals("d", actual.get(0).version);
+        assertEquals("c", actual.get(1).version);
+        assertEquals("a", actual.get(2).version);
+        assertEquals("b", actual.get(3).version);
+    }
+
+    @Test
+    public void thenByDescending() throws Exception {
+        // arrange
+        class Javascript {
+            String name;
+            int age;
+            String version;
+
+            Javascript(String name, int age, String version) {
+                this.name = name;
+                this.age = age;
+                this.version = version;
+            }
+        }
+
+        List<Javascript> list = new List<>(
+                new Javascript("Angular2", 2, "b"),
+                new Javascript("Angular2", 2, "a"),
+                new Javascript("Angular1", 2, "c"),
+                new Javascript("React", 1, "d")
+        );
+
+        // act
+        List<Javascript> actual = list.orderByDescending(x -> x.age).thenByDescending(x -> x.name).thenByDescending(x -> x.version).toList();
+
+        // assert
+        assertEquals("b", actual.get(0).version);
+        assertEquals("a", actual.get(1).version);
+        assertEquals("c", actual.get(2).version);
+        assertEquals("d", actual.get(3).version);
+    }
+
+    @Test
     public void union() throws Exception {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);

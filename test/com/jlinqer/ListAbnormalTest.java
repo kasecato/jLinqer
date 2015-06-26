@@ -671,6 +671,34 @@ public class ListAbnormalTest {
     }
 
     @Test
+    public void thenByDescending_abnormal() throws Exception {
+        // arrange
+        List<String> list = new List<>("Backbone", "Angular", "React");
+
+        // act and assert
+        try {
+            list.thenByDescending(null);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void thenBy_abnormal() throws Exception {
+        // arrange
+        List<String> list = new List<>("Backbone", "Angular", "React");
+
+        // act and assert
+        try {
+            list.thenBy(null);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
     public void union_abnormal() throws Exception {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
