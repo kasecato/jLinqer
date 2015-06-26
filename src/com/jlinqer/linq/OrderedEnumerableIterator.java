@@ -32,30 +32,29 @@ class OrderedEnumerableIterator<TElement, TKey> implements IEnumerable<TElement>
 
     @Override
     public Iterator<TElement> iterator() {
+        java.util.Queue<TElement> queue = new ArrayDeque<>();
+
         Buffer<TElement> buffer = new Buffer<>(source);
         if (buffer.count > 0) {
             IEnumerableSorter<TElement> sorter = getEnumerableSorter(null);
             int[] map = sorter.sort(buffer.items, buffer.count);
 
-            java.util.Queue<TElement> queue = new ArrayDeque<>();
-
             for (int i = 0; i < buffer.count; i++) {
                 queue.add(buffer.items.get(map[i]));
             }
 
-            return new Iterator<TElement>() {
-                @Override
-                public boolean hasNext() {
-                    return queue.size() != 0;
-                }
-
-                @Override
-                public TElement next() {
-                    return queue.remove();
-                }
-            };
         }
-        return null;
+        return new Iterator<TElement>() {
+            @Override
+            public boolean hasNext() {
+                return queue.size() != 0;
+            }
+
+            @Override
+            public TElement next() {
+                return queue.remove();
+            }
+        };
     }
 
 // -------------------------- OTHER METHODS --------------------------
