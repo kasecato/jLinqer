@@ -758,38 +758,6 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
-     * ﻿Sorts the elements of a sequence in ascending order according to a key.
-     *
-     * @param keySelector ﻿A function to extract a key from an element.
-     * @param <TKey>      ﻿The type of the key returned by keySelector.
-     * @return ﻿An IEnumerable<TSource> whose elements are sorted according
-     * ﻿to a key.
-     * @throws IllegalArgumentException ﻿keySelector is null.
-     */
-    default <TKey extends Comparable> IEnumerable<TSource> orderBy(final Function<TSource, TKey> keySelector) throws IllegalArgumentException {
-        if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
-
-        Comparator<TKey> comparator = (o1, o2) -> o1.compareTo(o2);
-        return new OrderedEnumerableIterator<>(this, keySelector, comparator, false);
-    }
-
-    /**
-     * ﻿Sorts the elements of a sequence in descending order according to a key.
-     *
-     * @param keySelector ﻿A function to extract a key from an element.
-     * @param <TKey>      ﻿The type of the key returned by keySelector.
-     * @return ﻿An IEnumerable<TSource> whose elements are sorted in
-     * ﻿descending order according to a key.
-     * @throws IllegalArgumentException ﻿keySelector is null.
-     */
-    default <TKey extends Comparable> IEnumerable<TSource> orderByDescending(final Function<TSource, TKey> keySelector) throws IllegalArgumentException {
-        if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
-
-        Comparator<TKey> comparator = (o1, o2) -> o1.compareTo(o2);
-        return new OrderedEnumerableIterator<>(this, keySelector, comparator, true);
-    }
-
-    /**
      * ﻿Inverts the order of the elements in a sequence.
      *
      * @return ﻿A sequence whose elements correspond to those of the input sequence in reverse ﻿order.
@@ -1213,8 +1181,28 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
 
         Comparator<TKey> comparator = (o1, o2) -> o1.compareTo(o2);
-        OrderedEnumerableIterator<TSource, TKey> source = (OrderedEnumerableIterator<TSource, TKey>) this;
-        return source.createOrderedEnumerable(keySelector, comparator, false);
+        if (this instanceof OrderedEnumerableIterator) {
+            OrderedEnumerableIterator<TSource, TKey> source = (OrderedEnumerableIterator<TSource, TKey>) this;
+            return source.createOrderedEnumerable(keySelector, comparator, false);
+        } else {
+            return orderBy(keySelector);
+        }
+    }
+
+    /**
+     * ﻿Sorts the elements of a sequence in ascending order according to a key.
+     *
+     * @param keySelector ﻿A function to extract a key from an element.
+     * @param <TKey>      ﻿The type of the key returned by keySelector.
+     * @return ﻿An IEnumerable<TSource> whose elements are sorted according
+     * ﻿to a key.
+     * @throws IllegalArgumentException ﻿keySelector is null.
+     */
+    default <TKey extends Comparable> IEnumerable<TSource> orderBy(final Function<TSource, TKey> keySelector) throws IllegalArgumentException {
+        if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
+
+        Comparator<TKey> comparator = (o1, o2) -> o1.compareTo(o2);
+        return new OrderedEnumerableIterator<>(this, keySelector, comparator, false);
     }
 
     /**
@@ -1230,8 +1218,28 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
 
         Comparator<TKey> comparator = (o1, o2) -> o1.compareTo(o2);
-        OrderedEnumerableIterator<TSource, TKey> source = (OrderedEnumerableIterator<TSource, TKey>) this;
-        return source.createOrderedEnumerable(keySelector, comparator, true);
+        if (this instanceof OrderedEnumerableIterator) {
+            OrderedEnumerableIterator<TSource, TKey> source = (OrderedEnumerableIterator<TSource, TKey>) this;
+            return source.createOrderedEnumerable(keySelector, comparator, true);
+        } else {
+            return orderByDescending(keySelector);
+        }
+    }
+
+    /**
+     * ﻿Sorts the elements of a sequence in descending order according to a key.
+     *
+     * @param keySelector ﻿A function to extract a key from an element.
+     * @param <TKey>      ﻿The type of the key returned by keySelector.
+     * @return ﻿An IEnumerable<TSource> whose elements are sorted in
+     * ﻿descending order according to a key.
+     * @throws IllegalArgumentException ﻿keySelector is null.
+     */
+    default <TKey extends Comparable> IEnumerable<TSource> orderByDescending(final Function<TSource, TKey> keySelector) throws IllegalArgumentException {
+        if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
+
+        Comparator<TKey> comparator = (o1, o2) -> o1.compareTo(o2);
+        return new OrderedEnumerableIterator<>(this, keySelector, comparator, true);
     }
 
     /**

@@ -10,7 +10,8 @@
 | Select | [select](#select) | map |
 | OrderBy | [orderBy](#orderby) | sorted |
 | OrderByDescending | [orderByDescending](#orderbydescending) | n/a |
-| ThenBy / ThenByDescending | n/a | n/a |
+| ThenBy | [thenBy](#thenby) | n/a |
+| ThenByDescending | [thenByDescending](#thenbyddescending) | n/a |
 | SelectMany | [selectMany](#selectmany) | flatMap |
 |||||
 | Skip | [skip](#skip) | skip |
@@ -35,15 +36,15 @@
 | Max | [max](#max) | max |
 | Min | [min](#min) | min |
 | Sum | [sumXXX](#sum) | Collectors.summarizingXXX |
-| First | [first](#first) | findFirst |
-| FirstOrDefault | [firstOrDefault](#firstOrDefault) | n/a |
-| Last | [last](#last) | n/a |
-| LastOrDefault | [lastOrDefault](#lastOrDefault) | n/a |
+| First | [first](#firstordefault) | findFirst |
+| FirstOrDefault | [firstOrDefault](#firstordefault) | n/a |
+| Last | [last](#lastordefault) | n/a |
+| LastOrDefault | [lastOrDefault](#lastordefault) | n/a |
 | Single | [single](#single) | n/a |
-| SingleOrDefault | [singleOrDefault](#singleOrDefault) | n/a |
+| SingleOrDefault | [singleOrDefault](#singleordefault) | n/a |
 | DefaultIfEmpty | [defaultIfEmpty](#defaultIfEmpty) | n/a |
-| ElementAt | [elementAt](#elementAt) | n/a |
-| ElementAtOrDefault | [elementAtOrDefault](#elementAtOrDefault) | n/a |
+| ElementAt | [elementAt](#elementatordefault) | n/a |
+| ElementAtOrDefault | [elementAtOrDefault](#elementatordefault) | n/a |
 | All | [all](#all) | allMatch |
 | Any | [any](#any) | anyMatch |
 |||||
@@ -58,8 +59,6 @@
 ## Usage
 
 The following operations are available.
-
-### Where
 
 ### Where
 
@@ -111,6 +110,38 @@ List<String> actual = list.orderByDescending(x -> x).toList();
 assertEquals("React"   , actual.get(0));
 assertEquals("Backbone", actual.get(1));
 assertEquals("Angular" , actual.get(2));
+```
+
+### ThenBy
+
+```Java
+List<Person> list = new List<>(
+        new Person("Angular2", 2),
+        new Person("Angular1", 2),
+        new Person("React"   , 1)
+);
+
+List<String> actual = list.orderBy(x -> x.age).thenBy(x -> x.name).toList();
+
+assertEquals("React" , actual.get(0).name);
+assertEquals("Angular1", actual.get(1).name);
+assertEquals("Angular2"   , actual.get(2).name);
+```
+
+### ThenByDescending
+
+```Java
+List<Person> list = new List<>(
+        new Person("Angular2", 2),
+        new Person("Angular1", 2),
+        new Person("React"   , 1)
+);
+
+List<String> actual = list.orderBy(x -> x.age).thenByDescending(x -> x.name).toList();
+
+assertEquals("React" , actual.get(0).name);
+assertEquals("Angular2", actual.get(1).name);
+assertEquals("Angular1"   , actual.get(2).name);
 ```
 
 ### SelectMany
@@ -496,3 +527,4 @@ assertEquals(3  , actualInt.get(1).intValue());
 1. Microsoft Reference Source, "Enumerable.cs", http://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs
 1. GitHub, "javaLinq", https://github.com/sircodesalotOfTheRound/javaLinq
 1. Qiita, "LINQ to Objects と Java8-Stream API の対応表", http://qiita.com/amay077/items/9d2941283c4a5f61f302
+1. stackoverflow, "Generic method to perform a map-reduce operation. (Java-8)", http://stackoverflow.com/questions/30826674/generic-method-to-perform-a-map-reduce-operation-java-8

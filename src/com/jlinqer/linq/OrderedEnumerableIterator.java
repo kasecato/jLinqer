@@ -21,7 +21,7 @@ class OrderedEnumerableIterator<TElement, TKey> implements IEnumerable<TElement>
         this.source = source;
         this.parent = null;
         this.keySelector = keySelector;
-        this.comparer = comparer != null ? comparer : (o1, o2) -> 0;
+        this.comparer = comparer;
         this.descending = descending;
     }
 
