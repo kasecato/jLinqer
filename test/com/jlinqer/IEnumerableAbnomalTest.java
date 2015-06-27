@@ -13,7 +13,7 @@ import static org.junit.Assert.fail;
 /**
  * Created by Keisuke Kato
  */
-public class ListAbnormalTest {
+public class IEnumerableAbnomalTest {
 // -------------------------- OTHER METHODS --------------------------
 
     @Test
