@@ -11,7 +11,7 @@
 | OrderBy | [orderBy](#orderby) | sorted |
 | OrderByDescending | [orderByDescending](#orderbydescending) | n/a |
 | ThenBy | [thenBy](#thenby) | n/a |
-| ThenByDescending | [thenByDescending](#thenbyddescending) | n/a |
+| ThenByDescending | [thenByDescending](#thenbydescending) | n/a |
 | SelectMany | [selectMany](#selectmany) | flatMap |
 |||||
 | Skip | [skip](#skip) | skip |

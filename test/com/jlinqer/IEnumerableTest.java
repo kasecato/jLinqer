@@ -13,20 +13,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Keisuke Kato
  */
-public class ListTest {
+public class IEnumerableTest {
 // -------------------------- OTHER METHODS --------------------------
-
-    @Test
-    public void aggregate() throws Exception {
-        // arrange
-        List<Integer> list = new List<>(1, 2, 3);
-
-        // act
-        int actual = list.aggregate((sum, elem) -> sum + elem);
-
-        // assert
-        assertEquals(6, actual);
-    }
 
     @Test
     public void all() throws Exception {
@@ -40,6 +28,18 @@ public class ListTest {
         // assert
         assertEquals(true, actual);
         assertEquals(false, actualNotFound);
+    }
+
+    @Test
+    public void aggregate() throws Exception {
+        // arrange
+        List<Integer> list = new List<>(1, 2, 3);
+
+        // act
+        int actual = list.aggregate((sum, elem) -> sum + elem);
+
+        // assert
+        assertEquals(6, actual);
     }
 
     @Test
