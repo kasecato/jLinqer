@@ -1,6 +1,6 @@
-package com.jlinqer.collections;
+package com.github.jlinqer.collections;
 
-import com.jlinqer.linq.IEnumerable;
+import com.github.jlinqer.linq.IEnumerable;
 
 import java.util.*;
 
