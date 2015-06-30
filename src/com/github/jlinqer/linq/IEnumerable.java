@@ -1,7 +1,7 @@
-package com.jlinqer.linq;
+package com.github.jlinqer.linq;
 
-import com.jlinqer.collections.List;
-import com.jlinqer.collections.Set;
+import com.github.jlinqer.collections.List;
+import com.github.jlinqer.collections.Set;
 
 import java.math.BigDecimal;
 import java.util.*;

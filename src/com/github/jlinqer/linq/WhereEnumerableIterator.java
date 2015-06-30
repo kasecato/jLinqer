@@ -1,4 +1,4 @@
-package com.jlinqer.linq;
+package com.github.jlinqer.linq;
 
 import java.util.Iterator;
 import java.util.function.Predicate;
