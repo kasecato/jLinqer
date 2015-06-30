@@ -21,7 +21,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      *
      * @param start ﻿The value of the first integer in the sequence.
      * @param count ﻿The number of sequential integers to generate.
-     * @return ﻿A List<Integer> that ﻿contains a range of sequential integral numbers.
+     * @return ﻿A List&lt;Integer&gt; that ﻿contains a range of sequential integral numbers.
      * @throws IndexOutOfBoundsException ﻿count is less than 0.-or-start + count -1 is larger than Integer.MaxValue.
      */
     static List<Integer> range(final int start, final int count) throws IndexOutOfBoundsException {
@@ -44,7 +44,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * @param element   ﻿The value to be repeated.
      * @param count     ﻿The number of times to repeat the value in the generated sequence.
      * @param <TResult> ﻿The type of the value to be repeated in the result sequence.
-     * @return ﻿A List<TResult> that contains a repeated value.
+     * @return ﻿A List&lt;TResult&gt; that contains a repeated value.
      * @throws IllegalArgumentException  ﻿type is null.
      * @throws IndexOutOfBoundsException ﻿count is less than 0.
      */
@@ -61,11 +61,11 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
-     * ﻿Returns an empty List<T> that has the specified ﻿type argument.
+     * ﻿Returns an empty List&lt;T&gt; that has the specified ﻿type argument.
      *
-     * @param type      The type to assign to the type parameter of the returned generic List<T>.
-     * @param <TResult> ﻿The type to assign to the type parameter of the returned generic List<T>.
-     * @return ﻿An empty List<T> whose type argument is ﻿TResult.
+     * @param type      The type to assign to the type parameter of the returned generic List&lt;T&gt;.
+     * @param <TResult> ﻿The type to assign to the type parameter of the returned generic List&lt;T&gt;.
+     * @return ﻿An empty List&lt;T&gt; whose type argument is ﻿TResult.
      * @throws IllegalArgumentException type is null.
      */
     static <TResult> List<TResult> empty(final Class<TResult> type) {
@@ -251,7 +251,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Concatenates two sequences.
      *
      * @param second ﻿The sequence to concatenate to the first sequence.
-     * @return ﻿An IEnumerable<TSource> that contains the concatenated ﻿elements of the two input sequences.
+     * @return ﻿An IEnumerable&lt;TSource&gt; that contains the concatenated ﻿elements of the two input sequences.
      * @throws IllegalArgumentException ﻿﻿second is null.
      */
     default IEnumerable<TSource> concat(final IEnumerable<TSource> second) throws IllegalArgumentException {
@@ -270,7 +270,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Returns the elements of the specified sequence or the type parameter's default
      * ﻿value in a singleton collection if the sequence is empty.
      *
-     * @return ﻿An IEnumerable<TSource> object that contains the default
+     * @return ﻿An IEnumerable&lt;TSource&gt; object that contains the default
      * ﻿value for the TSource type if source is empty    { return null;} otherwise, source.
      */
     default IEnumerable<TSource> defaultIfEmpty() {
@@ -288,7 +288,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿a singleton collection if the sequence is empty.
      *
      * @param defaultValue ﻿The value to return if the sequence is empty.
-     * @return ﻿An System.Collections.Generic.IEnumerable<TSource> that contains defaultValue if
+     * @return ﻿An System.Collections.Generic.IEnumerable&lt;TSource&gt; that contains defaultValue if
      * ﻿source is empty    { return null;} otherwise, source.
      */
     default IEnumerable<TSource> defaultIfEmpty(final TSource defaultValue) {
@@ -299,7 +299,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Returns distinct elements from a sequence by using the default equality ﻿comparer
      * ﻿to compare values.
      *
-     * @return ﻿An IEnumerable<TSource> that contains distinct elements ﻿from the source sequence.
+     * @return ﻿An IEnumerable&lt;TSource&gt; that contains distinct elements ﻿from the source sequence.
      */
     default IEnumerable<TSource> distinct() {
         IEnumerable<TSource> self = this;
@@ -353,7 +353,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Produces the set difference of two sequences by using the default equality
      * ﻿comparer to compare values.
      *
-     * @param second ﻿An IEnumerable<TSource> whose elements that also occur ﻿in the first sequence will cause those elements
+     * @param second ﻿An IEnumerable&lt;TSource&gt; whose elements that also occur ﻿in the first sequence will cause those elements
      *               to be removed from the returned ﻿sequence.
      * @return ﻿A sequence that contains the set difference of the elements of two sequences.
      * @throws IllegalArgumentException second is null.
@@ -451,7 +451,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      *
      * @param keySelector ﻿A function to extract the key for each element.
      * @param <TKey>      ﻿The type of the key returned by keySelector.
-     * @return ﻿An Map<TKey, IEnumerable<TSource>> ﻿object contains a sequence of objects and a key.
+     * @return ﻿An Map&lt;TKey, IEnumerable&lt;TSource&gt;&gt; ﻿object contains a sequence of objects and a key.
      * @throws IllegalArgumentException ﻿keySelector is null.
      */
     default <TKey> Map<TKey, IEnumerable<TSource>> groupBy(final Function<TSource, TKey> keySelector) throws IllegalArgumentException {
@@ -483,7 +483,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      *
      * @param selector  ﻿A transform function to apply to each element.
      * @param <TResult> ﻿The type of the value returned by selector.
-     * @return ﻿An IEnumerable<TResult> whose elements are the result
+     * @return ﻿An IEnumerable&lt;TResult&gt; whose elements are the result
      * ﻿of invoking the transform function on each element of source.
      * @throws IllegalArgumentException ﻿selector is null.
      */
@@ -515,7 +515,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Produces the set intersection of two sequences by using the default equality
      * ﻿comparer to compare values.
      *
-     * @param second ﻿An IEnumerable<TSource> whose distinct elements that ﻿also appear in the first sequence will be returned.
+     * @param second ﻿An IEnumerable&lt;TSource&gt; whose distinct elements that ﻿also appear in the first sequence will be returned.
      * @return ﻿A sequence that contains the elements that form the set intersection of two ﻿sequences.
      * @throws IllegalArgumentException second is null.
      */
@@ -603,7 +603,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿contains no elements.
      *
      * @return ﻿﻿default(TSource) if the source sequence is empty    { return null;} otherwise, the last element
-     * ﻿in the IEnumerable<TSource>.
+     * ﻿in the IEnumerable&lt;TSource&gt;.
      */
     default TSource lastOrDefault() {
         if (this.count() == 0) return null;
@@ -667,6 +667,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿maximum TSource value.
      *
      * @param selector ﻿A transform function to apply to each element.
+     * @param <TKey>   ﻿The type of the elements of source.
      * @return ﻿The maximum value in the sequence.
      * @throws IllegalArgumentException      selector is null.
      * @throws UnsupportedOperationException ﻿source contains no elements.
@@ -699,6 +700,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * minimum TSource value.
      *
      * @param selector ﻿A transform function to apply to each element.
+     * @param <TKey>   ﻿The type of the elements of source.
      * @return ﻿The minimum value in the sequence.
      * @throws IllegalArgumentException      selector is null.
      * @throws UnsupportedOperationException ﻿source contains no elements.
@@ -731,7 +733,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      *
      * @param type      ﻿The type to filter the elements of the sequence on.
      * @param <TResult> ﻿The type to filter the elements of the sequence on.
-     * @return ﻿An IEnumerable<TSource> that contains elements from ﻿the input sequence of type TResult.
+     * @return ﻿An IEnumerable&lt;TSource&gt; that contains elements from ﻿the input sequence of type TResult.
      * @throws IllegalArgumentException type is null.
      */
     default <TResult> IEnumerable<TResult> ofType(final Class<TResult> type) throws IllegalArgumentException {
@@ -745,7 +747,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      *
      * @param toType    ﻿The type to cast the elements of source to.
      * @param <TResult> ﻿The type to cast the elements of source to.
-     * @return ﻿An <TResult> that contains each element of
+     * @return ﻿An &lt;TResult&gt; that contains each element of
      * ﻿the source sequence cast to the specified type.
      * @throws IllegalArgumentException      toType is null.
      * @throws UnsupportedOperationException ﻿source contains no elements.
@@ -782,11 +784,11 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
-     * ﻿Projects each element of a sequence to an IEnumerable<TSource> ﻿and flattens the resulting sequences into one sequence.
+     * ﻿Projects each element of a sequence to an IEnumerable&lt;TSource&gt; ﻿and flattens the resulting sequences into one sequence.
      *
      * @param selector  ﻿A transform function to apply to each element.
      * @param <TResult> ﻿The type of the elements of the sequence returned by selector.
-     * @return ﻿An IEnumerable<TSource> whose elements are the result ﻿of invoking the one-to-many transform function on each element of the input ﻿sequence.
+     * @return ﻿An IEnumerable&lt;TSource&gt; whose elements are the result ﻿of invoking the one-to-many transform function on each element of the input ﻿sequence.
      * @throws IllegalArgumentException ﻿selector is null.
      */
     default <TResult> IEnumerable<TResult> selectMany(final Function<TSource, IEnumerable<TResult>> selector) throws IllegalArgumentException {
@@ -820,7 +822,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Determines whether two sequences are equal by comparing the elements by using
      * ﻿the default equality comparer for their type.
      *
-     * @param second ﻿An IEnumerable<TSource> to compare to the first sequence.
+     * @param second ﻿An IEnumerable&lt;TSource&gt; to compare to the first sequence.
      * @return ﻿true if the two source sequences are of equal length and their corresponding
      * ﻿elements are equal according to the default equality comparer for their type    { return null;}
      * ﻿otherwise, false.
@@ -940,7 +942,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿remaining elements.
      *
      * @param count ﻿The number of elements to skip before returning the remaining elements.
-     * @return ﻿An IEnumerable<TSource> that contains the elements that occur after the specified index in the input sequence.
+     * @return ﻿An IEnumerable&lt;TSource&gt; that contains the elements that occur after the specified index in the input sequence.
      */
     default IEnumerable<TSource> skip(final int count) {
         return () -> {
@@ -975,7 +977,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿and then returns the remaining elements.
      *
      * @param predicate ﻿A function to test each element for a condition.
-     * @return ﻿An System.Collections.Generic.IEnumerable<TSource> that contains the elements from
+     * @return ﻿An System.Collections.Generic.IEnumerable&lt;TSource&gt; that contains the elements from
      * ﻿the input sequence starting at the first element in the linear series that
      * ﻿does not pass the test specified by predicate.
      * @throws IllegalArgumentException predicate is null.
@@ -1107,7 +1109,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Returns a specified number of contiguous elements from the start of a sequence.
      *
      * @param count ﻿The number of elements to return.
-     * @return ﻿An IEnumerable<TSource> that contains the specified
+     * @return ﻿An IEnumerable&lt;TSource&gt; that contains the specified
      * ﻿number of elements from the start of the input sequence.
      */
     default IEnumerable<TSource> take(final long count) {
@@ -1138,7 +1140,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Returns elements from a sequence as long as a specified condition is true.
      *
      * @param predicate ﻿A function to test each element for a condition.
-     * @return ﻿An IEnumerable<TSource> that contains the elements from
+     * @return ﻿An IEnumerable&lt;TSource&gt; that contains the elements from
      * @throws IllegalArgumentException predicate is null.
      */
     default IEnumerable<TSource> takeWhile(final Predicate<TSource> predicate) throws IllegalArgumentException {
@@ -1170,11 +1172,11 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
-     * ﻿﻿An IOrderedEnumerable<TElement> that contains elements to sort.
+     * ﻿﻿An IOrderedEnumerable&lt;TElement&gt; that contains elements to sort.
      *
      * @param keySelector A function to extract a key from an element.
      * @param <TKey>      ﻿The type of the key returned by keySelector.
-     * @return ﻿An IOrderedEnumerable<TElement> whose elements are sorted according ﻿to a key.
+     * @return ﻿An IOrderedEnumerable&lt;TElement&gt; whose elements are sorted according ﻿to a key.
      * @throws IllegalArgumentException keySelector is null.
      */
     default <TKey extends Comparable> IEnumerable<TSource> thenBy(final Function<TSource, TKey> keySelector) throws IllegalArgumentException {
@@ -1194,7 +1196,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      *
      * @param keySelector ﻿A function to extract a key from an element.
      * @param <TKey>      ﻿The type of the key returned by keySelector.
-     * @return ﻿An IEnumerable<TSource> whose elements are sorted according
+     * @return ﻿An IEnumerable&lt;TSource&gt; whose elements are sorted according
      * ﻿to a key.
      * @throws IllegalArgumentException ﻿keySelector is null.
      */
@@ -1211,7 +1213,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      *
      * @param keySelector A function to extract a key from an element.
      * @param <TKey>      ﻿The type of the key returned by keySelector.
-     * @return ﻿An IOrderedEnumerable<TElement> whose elements are sorted in ﻿descending order according to a key.
+     * @return ﻿An IOrderedEnumerable&lt;TElement&gt; whose elements are sorted in ﻿descending order according to a key.
      * @throws IllegalArgumentException keySelector is null.
      */
     default <TKey extends Comparable> IEnumerable<TSource> thenByDescending(final Function<TSource, TKey> keySelector) throws IllegalArgumentException {
@@ -1231,7 +1233,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      *
      * @param keySelector ﻿A function to extract a key from an element.
      * @param <TKey>      ﻿The type of the key returned by keySelector.
-     * @return ﻿An IEnumerable<TSource> whose elements are sorted in
+     * @return ﻿An IEnumerable&lt;TSource&gt; whose elements are sorted in
      * ﻿descending order according to a key.
      * @throws IllegalArgumentException ﻿keySelector is null.
      */
@@ -1243,9 +1245,9 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
-     * Creates a List<TSource> from an IEnumerable<TSource>.
+     * Creates a List&lt;TSource&gt; from an IEnumerable&lt;TSource&gt;.
      *
-     * @return A List<TSource> that contains elements from the input sequence.
+     * @return A List&lt;TSource&gt; that contains elements from the input sequence.
      */
     default List<TSource> toList() {
         return new List<>(this);
@@ -1254,8 +1256,8 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     /**
      * ﻿Produces the set union of two sequences by using the default equality comparer.
      *
-     * @param second ﻿An IEnumerable<TSource> whose distinct elements form ﻿the second set for the union.
-     * @return ﻿An IEnumerable<TSource> that contains the elements from ﻿both input sequences, excluding duplicates.
+     * @param second ﻿An IEnumerable&lt;TSource&gt; whose distinct elements form ﻿the second set for the union.
+     * @return ﻿An IEnumerable&lt;TSource&gt; that contains the elements from ﻿both input sequences, excluding duplicates.
      * @throws IllegalArgumentException second is null.
      */
     default IEnumerable<TSource> union(final IEnumerable<TSource> second) throws IllegalArgumentException {
@@ -1274,7 +1276,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * ﻿Filters a sequence of values based on a predicate.
      *
      * @param predicate ﻿A function to test each element for a condition.
-     * @return ﻿An IEnumerable<TSource> that contains elements from
+     * @return ﻿An IEnumerable&lt;TSource&gt; that contains elements from
      * ﻿the input sequence that satisfy the condition.
      * @throws IllegalArgumentException predicate is null.
      */

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jlinqer</groupId>
-    <artifactId>jLinqer</artifactId>
+    <artifactId>jlinqer</artifactId>
     <version>0.1.0</version>
     <name>jLinqer</name>
 
@@ -59,6 +59,12 @@
         </dependency>
     </dependencies>
     <build>
+        <directory>${project.basedir}/target</directory>
+        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+        <sourceDirectory>${project.basedir}/src/</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/test/</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -76,7 +82,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>2.10.3</version>
+                <configuration>
+                    <author>true</author>
+                    <source>1.8</source>
+                    <show>protected</show>
+                    <encoding>UTF-8</encoding>
+                    <charset>UTF-8</charset>
+                    <docencoding>UTF-8</docencoding>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
