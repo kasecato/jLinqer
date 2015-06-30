@@ -40,9 +40,9 @@
 | FirstOrDefault | [firstOrDefault](#firstordefault) | n/a |
 | Last | [last](#lastordefault) | n/a |
 | LastOrDefault | [lastOrDefault](#lastordefault) | n/a |
-| Single | [single](#single) | n/a |
+| Single | [single](#singleordefault) | n/a |
 | SingleOrDefault | [singleOrDefault](#singleordefault) | n/a |
-| DefaultIfEmpty | [defaultIfEmpty](#defaultIfEmpty) | n/a |
+| DefaultIfEmpty | [defaultIfEmpty](#defaultifempty) | n/a |
 | ElementAt | [elementAt](#elementatordefault) | n/a |
 | ElementAtOrDefault | [elementAtOrDefault](#elementatordefault) | n/a |
 | All | [all](#all) | allMatch |
@@ -55,6 +55,18 @@
 | SequenceEqual | [sequenceEqual](#sequenceequal) | n/a |
 | Cast | [cast](#cast) | n/a |
 | OfType | [ofType](#oftype) | n/a |
+
+## Maven
+
+```XML
+<dependencies>
+    <dependency>
+        <groupId>com.github.jlinqer</groupId>
+        <artifactId>jlinqer</artifactId>
+        <version>0.1.0</version>
+    </dependency>
+</dependencies>
+```
 
 ## Usage
 
@@ -522,7 +534,7 @@ assertEquals(1  , actualInt.get(0).intValue());
 assertEquals(3  , actualInt.get(1).intValue());
 ```
 
-#Reference
+#References
 
 1. Microsoft Reference Source, "Enumerable.cs", http://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs
 1. GitHub, "javaLinq", https://github.com/sircodesalotOfTheRound/javaLinq
