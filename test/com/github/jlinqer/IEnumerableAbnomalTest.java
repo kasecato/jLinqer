@@ -748,6 +748,5 @@ public class IEnumerableAbnomalTest {
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));
         }
-
     }
 }

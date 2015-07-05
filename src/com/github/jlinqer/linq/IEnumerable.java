@@ -1287,7 +1287,6 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         return new WhereEnumerableIterator<>(this, predicate);
     }
 
-
     /**
      * ﻿Merges two sequences by using the specified predicate function.
      *
