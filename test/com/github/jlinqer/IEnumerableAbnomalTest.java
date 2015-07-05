@@ -725,4 +725,27 @@ public class IEnumerableAbnomalTest {
             assertThat(e, instanceOf(IllegalArgumentException.class));
         }
     }
+
+    @Test
+    public void zip_abnormal() throws Exception {
+        // arrange
+        List<Integer> first = new List<>(1, 2, 3);
+        List<String> second = null;
+
+        // act and assert
+        try {
+            first.zip(second, (x, y) -> String.format("%d, %s", x, y));
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+        try {
+            first.zip(first, null);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+    }
 }
