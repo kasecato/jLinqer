@@ -890,5 +890,36 @@ namespace Com.JLinqer
                 Assert.IsTrue(e is ArgumentNullException);
             }
         }
+
+        [TestMethod]
+        public void Zip_abnormal()
+        {
+            // arrange
+            List<int> first = new List<int>() { 1, 2, 3 };
+            List<String> second = new List<String>() { "Angular", "React", "Backbone" };
+            Func<int, String, String> resultSelector = (x, y) => String.Format("{0} {1}", x, y);
+            Func<int, String, String> resultSelectorNull = null;
+
+            // act and assert
+            try
+            {
+                first.Zip(null, resultSelector);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e is ArgumentNullException);
+            }
+
+            try
+            {
+                first.Zip(second, resultSelectorNull);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e is ArgumentNullException);
+            }
+        }
     }
 }
