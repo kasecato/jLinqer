@@ -748,6 +748,22 @@ namespace Com.JLinqer
             Assert.AreEqual(false, actual.Contains(2));
             Assert.AreEqual(true, actual.Contains(3));
         }
+
+        [TestMethod]
+        public void Zip()
+        {
+            // arrange
+            List<int> first = new List<int>() { 1, 2, 3 };
+            List<String> second = new List<String>() { "Angular", "React", "Backbone" };
+
+            // act
+            List<String> actual = first.Zip(second, (x, y) => String.Format("{0} {1}", x, y)).ToList();
+
+            // assert
+            Assert.AreEqual("1 Angular", actual[0]);
+            Assert.AreEqual("2 React", actual[1]);
+            Assert.AreEqual("3 Backbone", actual[2]);
+        }
     }
 
     class Javascript

@@ -5,6 +5,7 @@ import com.github.jlinqer.linq.IEnumerable;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.function.BiFunction;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
@@ -720,6 +721,29 @@ public class IEnumerableAbnomalTest {
         // act and assert
         try {
             list.where(null);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void zip_abnormal() throws Exception {
+        // arrange
+        List<Integer> first = new List<>(1, 2, 3);
+        List<String> second = new List<>("Angular", "React", "Backbone");
+        BiFunction<Integer, String, String> resultSelector = (x, y) -> String.format("%d, %s", x, y);
+
+        // act and assert
+        try {
+            first.zip(null, resultSelector);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+        try {
+            first.zip(second, null);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));

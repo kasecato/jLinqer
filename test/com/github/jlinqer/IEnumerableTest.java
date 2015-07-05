@@ -778,4 +778,19 @@ public class IEnumerableTest {
         assertEquals(false, actual.contains(2));
         assertEquals(true, actual.contains(3));
     }
+
+    @Test
+    public void zip() throws Exception {
+        // arrange
+        List<Integer> first = new List<>(1, 2, 3);
+        List<String> second = new List<>("Angular", "React", "Backbone");
+
+        // act
+        List<String> actual = first.zip(second, (x, y) -> String.format("%d %s", x, y)).toList();
+
+        // assert
+        assertEquals("1 Angular", actual.get(0));
+        assertEquals("2 React", actual.get(1));
+        assertEquals("3 Backbone", actual.get(2));
+    }
 }

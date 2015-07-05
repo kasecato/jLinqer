@@ -26,7 +26,7 @@
 | Join | n/a | n/a |
 | GroupJoin | n/a | n/a |
 | Reverse | [reverse](#reverse) | n/a |
-| Zip | n/a | n/a |
+| Zip | [zip](#zip) | n/a |
 |||||
 | Distinct | [distinct](#distinct) | distinct |
 | Aggregate | [aggregate](#aggregate) | reduce |
@@ -59,13 +59,11 @@
 ## Maven
 
 ```XML
-<dependencies>
-    <dependency>
-        <groupId>com.github.jlinqer</groupId>
-        <artifactId>jlinqer</artifactId>
-        <version>0.1.0</version>
-    </dependency>
-</dependencies>
+<dependency>
+    <groupId>com.github.jlinqer</groupId>
+    <artifactId>jlinqer</artifactId>
+    <version>0.1.0</version>
+</dependency>
 ```
 
 ## Usage
@@ -216,6 +214,7 @@ assertEquals(2, actual.size());
 assertEquals("Backbone", actual.get(0));
 assertEquals("Angular" , actual.get(1));
 ```
+
 ### Concat
 
 ```Java
@@ -281,6 +280,18 @@ assertEquals(2, actual.get(1).intValue());
 assertEquals(1, actual.get(2).intValue());
 ```
 
+### Zip
+
+```Java
+List<Integer> first = new List<>(1, 2, 3);
+List<String> second = new List<>("Angular", "React", "Backbone");
+
+List<Integer> actual = first.zip(second, (x, y) -> String.format("%s %d", x, y)).toList();
+
+assertEquals("1 Angular" , actual.get(0));
+assertEquals("2 React"   , actual.get(1));
+assertEquals("3 Backbone", actual.get(2));
+```
 
 ### Distinct
 

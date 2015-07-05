@@ -5,6 +5,7 @@ import com.github.jlinqer.collections.Set;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -1284,5 +1285,33 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
         if (predicate == null) throw new IllegalArgumentException("predicate is null.");
 
         return new WhereEnumerableIterator<>(this, predicate);
+    }
+
+    /**
+     * ﻿Merges two sequences by using the specified predicate function.
+     *
+     * @param second         ﻿The second sequence to merge.
+     * @param resultSelector ﻿A function that specifies how to merge the elements from the two sequences.
+     * @param <TSecond>      ﻿The type of the elements of the second input sequence.
+     * @param <TResult>      ﻿The type of the elements of the result sequence.
+     * @return ﻿An IEnumerable&lt;T&gt; that contains merged elements
+     * ﻿of two input sequences.
+     * @throws IllegalArgumentException ﻿first or second is null.
+     */
+    default <TSecond, TResult> IEnumerable<TResult> zip(final IEnumerable<TSecond> second, final BiFunction<TSource, TSecond, TResult> resultSelector) throws IllegalArgumentException {
+        if (second == null) throw new IllegalArgumentException("second is null.");
+        if (resultSelector == null) throw new IllegalArgumentException("resultSelector is null.");
+
+        return () -> {
+            List<TResult> allItems = new List<>();
+
+            Iterator<TSource> e1 = this.iterator();
+            Iterator<TSecond> e2 = second.iterator();
+            while (e1.hasNext() && e2.hasNext()) {
+                allItems.add(resultSelector.apply(e1.next(), e2.next()));
+            }
+
+            return allItems.iterator();
+        };
     }
 }
