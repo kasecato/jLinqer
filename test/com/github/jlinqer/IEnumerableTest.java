@@ -780,6 +780,20 @@ public class IEnumerableTest {
     }
 
     @Test
+    public void where_index() throws Exception {
+        // arrange
+        List<String> list = new List<>("baCkbone", "reaCt", "angular");
+
+        // act
+        List<String> actual = list.where((x, index) -> x.contains("C") && index % 2 == 0).toList();
+
+        // assert
+        assertEquals(true, actual.contains("baCkbone"));
+        assertEquals(false, actual.contains("reaCt"));
+        assertEquals(false, actual.contains("angular"));
+    }
+
+    @Test
     public void zip() throws Exception {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);

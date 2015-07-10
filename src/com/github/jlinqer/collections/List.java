@@ -11,7 +11,7 @@ import java.util.*;
 public class List<TSource> implements IEnumerable<TSource>, java.util.List<TSource> {
 // ------------------------------ FIELDS ------------------------------
 
-    private java.util.List<TSource> list = new LinkedList<>();
+    private java.util.List<TSource> list = new ArrayList<>();
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
@@ -23,17 +23,17 @@ public class List<TSource> implements IEnumerable<TSource>, java.util.List<TSour
         Collections.addAll(this, items);
     }
 
-    @Override
-    public boolean add(final TSource t) {
-        return list.add(t);
-    }
-
     public List(IEnumerable<TSource> items) {
         for (TSource item : items) this.add(item);
     }
 
     public List(java.util.List<TSource> list) {
         this.list = list;
+    }
+
+    @Override
+    public boolean add(final TSource t) {
+        return list.add(t);
     }
 
 // ------------------------ CANONICAL METHODS ------------------------
