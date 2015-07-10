@@ -5,10 +5,7 @@ import com.github.jlinqer.collections.Set;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.function.*;
 
 /**
  * Created by Reuben Kuhnert
@@ -1288,6 +1285,33 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
+     * ﻿Filters a sequence of values based on a predicate.
+     *
+     * @param predicate ﻿A function to test each source element for a condition; the second parameter
+     *                  of the function represents the index of the source element.
+     * @return ﻿An IEnumerable&lt;TSource&gt; that contains elements from
+     * ﻿the input sequence that satisfy the condition.
+     * @throws IllegalArgumentException predicate is null.
+     * @throws ArithmeticException      ﻿The number of elements in source is larger than Integer.MaxValue.
+     */
+    default IEnumerable<TSource> where(final BiPredicate<TSource, Integer> predicate) throws IllegalArgumentException {
+        if (predicate == null) throw new IllegalArgumentException("predicate is null.");
+
+        return () -> {
+            List<TSource> allItems = new List<>();
+            int index = -1;
+            for (TSource element : this) {
+                index = Math.addExact(index, 1);
+                if (predicate.test(element, index)) {
+                    allItems.add(element);
+                }
+            }
+
+            return allItems.iterator();
+        };
+    }
+
+    /**
      * ﻿Merges two sequences by using the specified predicate function.
      *
      * @param second         ﻿The second sequence to merge.
@@ -1296,7 +1320,7 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
      * @param <TResult>      ﻿The type of the elements of the result sequence.
      * @return ﻿An IEnumerable&lt;T&gt; that contains merged elements
      * ﻿of two input sequences.
-     * @throws IllegalArgumentException ﻿first or second is null.
+     * @throws IllegalArgumentException second is null.
      */
     default <TSecond, TResult> IEnumerable<TResult> zip(final IEnumerable<TSecond> second, final BiFunction<TSource, TSecond, TResult> resultSelector) throws IllegalArgumentException {
         if (second == null) throw new IllegalArgumentException("second is null.");

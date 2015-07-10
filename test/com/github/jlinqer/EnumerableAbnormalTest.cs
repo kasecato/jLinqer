@@ -891,6 +891,25 @@ namespace Com.JLinqer
             }
         }
 
+﻿        [TestMethod]
+        public void Where_Index_abnormal()
+        {
+            // arrange
+            List<int> list = new List<int>() { 1, 2, 3 };
+            Func<int, int, bool> func = null;
+
+            // act and assert
+            try
+            {
+                list.Where(func);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e is ArgumentNullException);
+            }
+        }
+
         [TestMethod]
         public void Zip_abnormal()
         {

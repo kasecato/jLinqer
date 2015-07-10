@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
@@ -717,10 +719,26 @@ public class IEnumerableAbnomalTest {
     public void where_abnormal() throws Exception {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
+        Predicate<Integer> predicate = null;
 
         // act and assert
         try {
-            list.where(null);
+            list.where(predicate);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void where_index_abnormal() throws Exception {
+        // arrange
+        List<Integer> list = new List<>(1, 2, 3);
+        BiPredicate<Integer, Integer> predicate = null;
+
+        // act and assert
+        try {
+            list.where(predicate);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));

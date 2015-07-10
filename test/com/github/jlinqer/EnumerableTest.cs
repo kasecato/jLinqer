@@ -749,6 +749,21 @@ namespace Com.JLinqer
             Assert.AreEqual(true, actual.Contains(3));
         }
 
+﻿        [TestMethod]
+        public void WhereIndex()
+        {
+            // arrange
+            List<string> list = new List<string>() { "baCkbone", "reaCt", "angular" };
+
+            // act
+            List<string> actual = list.Where((x, index) => x.Contains("C") && index % 2 == 0).ToList();
+
+            // assert
+            Assert.AreEqual(true, actual.Contains("baCkbone"));
+            Assert.AreEqual(false, actual.Contains("reaCt"));
+            Assert.AreEqual(false, actual.Contains("angular"));
+        }
+
         [TestMethod]
         public void Zip()
         {
