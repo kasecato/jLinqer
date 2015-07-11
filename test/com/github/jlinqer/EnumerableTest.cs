@@ -1,11 +1,11 @@
-﻿using System;
+﻿﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
 namespace Com.JLinqer
 {
-﻿    /// <summary>
+    /// <summary>
     /// Created by Keisuke Kato
     /// </summary>
     [TestClass]
@@ -615,29 +615,30 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Sum() {
-        // arrange
-        List<int> listInt = new List<int>(){ 1, 2, 3 };
-        List<long> listlong = new List<long>(){ 1, 2, 3 };
-        List<double> listdouble = new List<double>(){ 1.1d, 2.2d, 3.3d };
-        List<decimal> listdecimal = new List<decimal>() {
+        public void Sum()
+        {
+            // arrange
+            List<int> listInt = new List<int>() { 1, 2, 3 };
+            List<long> listlong = new List<long>() { 1, 2, 3 };
+            List<double> listdouble = new List<double>() { 1.1d, 2.2d, 3.3d };
+            List<decimal> listdecimal = new List<decimal>() {
                 new decimal(1.1),
                 new decimal(2.2),
                 new decimal(3.3)
         };
 
-        // act
-        int actualInt = listInt.Sum(x => x);
-        long actuallong = listlong.Sum(x => x);
-        double actualdouble = listdouble.Sum(x => x);
-        decimal actualdecimal = listdecimal.Sum(x => x);
+            // act
+            int actualInt = listInt.Sum(x => x);
+            long actuallong = listlong.Sum(x => x);
+            double actualdouble = listdouble.Sum(x => x);
+            decimal actualdecimal = listdecimal.Sum(x => x);
 
-        // assert
-        Assert.AreEqual(6, actualInt);
-        Assert.AreEqual(6, actuallong);
-        Assert.AreEqual(6.6d, actualdouble, 0d);
-        Assert.AreEqual(new decimal(6.6), actualdecimal);
-    }
+            // assert
+            Assert.AreEqual(6, actualInt);
+            Assert.AreEqual(6, actuallong);
+            Assert.AreEqual(6.6d, actualdouble, 0d);
+            Assert.AreEqual(new decimal(6.6), actualdecimal);
+        }
 
         [TestMethod]
         public void Take()
@@ -716,6 +717,40 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
+        public void ToDictionary()
+        {
+            // arrange
+            List<Javascript> list = new List<Javascript>() {
+                new Javascript("Angular", 2),
+                new Javascript("React", 1)
+            };
+
+            // act
+            Dictionary<string, Javascript> actual = list.ToDictionary(x => x.Name);
+
+            // assert
+            Assert.AreEqual(2, actual["Angular"].Age);
+            Assert.AreEqual(1, actual["React"].Age);
+        }
+
+        [TestMethod]
+        public void ToDictionarySelect()
+        {
+            // arrange
+            List<Javascript> list = new List<Javascript>() {
+                new Javascript("Angular", 2),
+                new Javascript("React", 1)
+            };
+
+            // act
+            Dictionary<string, int> actual = list.ToDictionary(x => x.Name, x => x.Age);
+
+            // assert
+            Assert.AreEqual(2, actual["Angular"]);
+            Assert.AreEqual(1, actual["React"]);
+        }
+
+        [TestMethod]
         public void Union()
         {
             // arrange
@@ -749,7 +784,7 @@ namespace Com.JLinqer
             Assert.AreEqual(true, actual.Contains(3));
         }
 
-﻿        [TestMethod]
+        [TestMethod]
         public void WhereIndex()
         {
             // arrange

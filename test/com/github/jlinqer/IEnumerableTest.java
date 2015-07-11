@@ -1,5 +1,6 @@
 package com.github.jlinqer;
 
+import com.github.jlinqer.collections.Dictionary;
 import com.github.jlinqer.collections.List;
 import com.github.jlinqer.linq.IEnumerable;
 import org.junit.Test;
@@ -745,6 +746,58 @@ public class IEnumerableTest {
         assertEquals("a", actual.get(1).version);
         assertEquals("c", actual.get(2).version);
         assertEquals("d", actual.get(3).version);
+    }
+
+    @Test
+    public void toDictionary() throws Exception {
+        // arrange
+        class Javascript {
+            String name;
+            int age;
+
+            Javascript(String name, int age) {
+                this.name = name;
+                this.age = age;
+            }
+        }
+
+        List<Javascript> list = new List<>(
+                new Javascript("Angular", 2),
+                new Javascript("React", 1)
+        );
+
+        // act
+        Dictionary<String, Javascript> actual = list.toDictionary(x -> x.name);
+
+        // assert
+        assertEquals(2, actual.get("Angular").age);
+        assertEquals(1, actual.get("React").age);
+    }
+
+    @Test
+    public void toDictionarySelect() throws Exception {
+        // arrange
+        class Javascript {
+            String name;
+            int age;
+
+            Javascript(String name, int age) {
+                this.name = name;
+                this.age = age;
+            }
+        }
+
+        List<Javascript> list = new List<>(
+                new Javascript("Angular", 2),
+                new Javascript("React", 1)
+        );
+
+        // act
+        Dictionary<String, Integer> actual = list.toDictionary(x -> x.name, x -> x.age);
+
+        // assert
+        assertEquals(2, actual.get("Angular").intValue());
+        assertEquals(1, actual.get("React").intValue());
     }
 
     @Test

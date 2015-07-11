@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -855,6 +855,45 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
+        public void ToDictionary_abnormal()
+        {
+            // arrange
+            List<String> list = new List<String>() { "Backbone", "Angular", "React" };
+            Func<String, String> func = null;
+
+            // act and assert
+            try
+            {
+                list.ToDictionary(func);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e is ArgumentNullException);
+            }
+        }
+
+        [TestMethod]
+        public void ToDictionarySelect_abnormal()
+        {
+            // arrange
+            List<String> list = new List<String>() { "Backbone", "Angular", "React" };
+            Func<String, String> func = null;
+            Func<String, String> selector = null;
+
+            // act and assert
+            try
+            {
+                list.ToDictionary(func, selector);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e is ArgumentNullException);
+            }
+        }
+
+        [TestMethod]
         public void Union_abnormal()
         {
             // arrange
@@ -891,7 +930,7 @@ namespace Com.JLinqer
             }
         }
 
-﻿        [TestMethod]
+        [TestMethod]
         public void Where_Index_abnormal()
         {
             // arrange
