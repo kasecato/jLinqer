@@ -1,5 +1,6 @@
 package com.github.jlinqer.linq;
 
+import com.github.jlinqer.collections.Dictionary;
 import com.github.jlinqer.collections.List;
 import com.github.jlinqer.collections.Set;
 
@@ -1240,6 +1241,50 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
 
         Comparator<TKey> comparator = (o1, o2) -> o1.compareTo(o2);
         return new OrderedEnumerableIterator<>(this, keySelector, comparator, true);
+    }
+
+    /**
+     * Creates a Dictionary&lt;TKey,TValue&gt; from an IEnumerable&lt;T&gt;
+     * according to a specified key selector function.
+     *
+     * @param keySelector A function to extract a key from each element.
+     * @param <TKey>      The type of the key returned by keySelector.
+     * @return A Dictionary&lt;TKey,TValue&gt; that contains keys and values.
+     * @throws IllegalArgumentException keySelector is null.-or-keySelector produces a key that is null.
+     */
+    default <TKey> Dictionary<TKey, TSource> toDictionary(final Function<TSource, TKey> keySelector) {
+        if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
+
+        Dictionary<TKey, TSource> allItems = new Dictionary<>();
+        for (TSource element : this) {
+            allItems.put(keySelector.apply(element), element);
+        }
+
+        return allItems;
+    }
+
+    /**
+     * Creates a Dictionary&lt;TKey,TValue&gt; from an IEnumerable&lt;T&gt;
+     * according to a specified key and element selector functions.
+     *
+     * @param keySelector     A function to extract a key from each element.
+     * @param elementSelector ﻿A transform function to produce a result element value from each element.
+     * @param <TKey>          The type of the key returned by keySelector.
+     * @param <TElement>      ﻿The type of the value returned by elementSelector.
+     * @return A Dictionary&lt;TKey,TValue&gt; that contains values of type TElement selected from the input sequence.
+     * @throws IllegalArgumentException keySelector or elementSelector is null.-or-keySelector produces a key that is null.
+     */
+    default <TKey, TElement> Dictionary<TKey, TElement> toDictionary(final Function<TSource, TKey> keySelector, final Function<TSource, TElement> elementSelector) {
+        if (keySelector == null) throw new IllegalArgumentException("keySelector is null.");
+        if (elementSelector == null) throw new IllegalArgumentException("elementSelector is null.");
+
+        Dictionary<TKey, TElement> allItems = new Dictionary<>();
+
+        for (TSource element : this) {
+            allItems.put(keySelector.apply(element), elementSelector.apply(element));
+        }
+
+        return allItems;
     }
 
     /**
