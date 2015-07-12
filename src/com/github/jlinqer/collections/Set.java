@@ -28,13 +28,13 @@ public class Set<TSource> implements IEnumerable<TSource>, java.util.Set<TSource
         }
     }
 
+    public Set(IEnumerable<TSource> items) {
+        for (TSource item : items) this.add(item);
+    }
+
     @Override
     public boolean add(final TSource t) {
         return set.add(t);
-    }
-
-    public Set(IEnumerable<TSource> items) {
-        for (TSource item : items) this.add(item);
     }
 
 // ------------------------ CANONICAL METHODS ------------------------

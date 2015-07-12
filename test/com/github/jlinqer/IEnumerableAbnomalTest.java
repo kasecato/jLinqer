@@ -702,6 +702,48 @@ public class IEnumerableAbnomalTest {
     }
 
     @Test
+    public void toArray_abnormal() throws Exception {
+        // arrange
+        List<String> list = new List<>("Backbone", "Angular", "React");
+        Class<String> clazz = null;
+
+        // act and assert
+        try {
+            list.toArray(clazz);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void toDictionary_abnormal() throws Exception {
+        // arrange
+        List<String> list = new List<>("Backbone", "Angular", "React");
+
+        // act and assert
+        try {
+            list.toDictionary(null);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void toDictionarySelect_abnormal() throws Exception {
+        // arrange
+        List<String> list = new List<>("Backbone", "Angular", "React");
+
+        try {
+            list.toDictionary(x -> x.contains("c"), null);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
     public void union_abnormal() throws Exception {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);

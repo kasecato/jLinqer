@@ -1,7 +1,7 @@
-﻿﻿using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Com.JLinqer
 {
@@ -929,6 +929,7 @@ namespace Com.JLinqer
                 Assert.IsTrue(e is ArgumentNullException);
             }
         }
+
 
         [TestMethod]
         public void Where_Index_abnormal()

@@ -749,6 +749,20 @@ public class IEnumerableTest {
     }
 
     @Test
+    public void toArray() throws Exception {
+        // arrange
+        List<String> list = new List<>("Backbone", "Angular", "React");
+
+        // act
+        String[] actual = list.where(x -> x.contains("c")).toArray(String.class);
+
+        // assert
+        assertEquals(2, actual.length);
+        assertEquals("Backbone", actual[0]);
+        assertEquals("React", actual[1]);
+    }
+
+    @Test
     public void toDictionary() throws Exception {
         // arrange
         class Javascript {
