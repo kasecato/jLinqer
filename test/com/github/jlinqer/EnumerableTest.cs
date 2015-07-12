@@ -1,7 +1,7 @@
-﻿﻿using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Com.JLinqer
 {
@@ -714,6 +714,21 @@ namespace Com.JLinqer
             Assert.AreEqual("a", actual[1].Version);
             Assert.AreEqual("c", actual[2].Version);
             Assert.AreEqual("d", actual[3].Version);
+        }
+
+        [TestMethod]
+        public void ToArray()
+        {
+            // arrange
+            List<String> list = new List<String>() { "Backbone", "Angular", "React" };
+
+            // act
+            String[] actual = list.Where(x => x.Contains("c")).ToArray();
+
+            // assert
+            Assert.AreEqual(2, actual.Count());
+            Assert.AreEqual("Backbone", actual[0]);
+            Assert.AreEqual("React", actual[1]);
         }
 
         [TestMethod]

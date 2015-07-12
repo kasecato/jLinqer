@@ -4,6 +4,7 @@ import com.github.jlinqer.collections.Dictionary;
 import com.github.jlinqer.collections.List;
 import com.github.jlinqer.collections.Set;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.*;
@@ -1241,6 +1242,21 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
 
         Comparator<TKey> comparator = (o1, o2) -> o1.compareTo(o2);
         return new OrderedEnumerableIterator<>(this, keySelector, comparator, true);
+    }
+
+
+    /**
+     * Creates an array from an IEnumerable&lt;TSource&gt;.
+     *
+     * @param toType The type to cast the elements of source to.
+     * @return An array that contains elements from the input sequence.
+     * @throws IllegalArgumentException toType is null.
+     */
+    default TSource[] toArray(Class<TSource> toType) {
+        if (toType == null) throw new IllegalArgumentException("toType is null.");
+
+        TSource[] r = (TSource[]) Array.newInstance(toType, this.count());
+        return this.toList().toArray(r);
     }
 
     /**
