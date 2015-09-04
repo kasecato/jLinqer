@@ -1,4 +1,5 @@
 #jLinqer
+[![Circle CI](https://circleci.com/gh/k--kato/jLinqer.svg?style=shield&circle-token=5a717ccbb33b6a206644b5e630807fc9dff1597f)](https://circleci.com/gh/k--kato/jLinqer)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jlinqer/jlinqer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.jlinqer/jlinqer)
 [![License: MIT](http://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
