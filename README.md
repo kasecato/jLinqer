@@ -1,6 +1,22 @@
 #jLinqer
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jlinqer/jlinqer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.jlinqer/jlinqer)
+[![License: MIT](http://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 "**jLinqer**" is a Java implementation of LINQ.
+
+## Maven
+
+```XML
+<dependency>
+    <groupId>com.github.jlinqer</groupId>
+    <artifactId>jlinqer</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
+
+## Usage
+
+The following operations are available.
 
 ##LINQ - jLinqer Matrix
 
@@ -55,20 +71,6 @@
 | SequenceEqual | [sequenceEqual](#sequenceequal) | n/a |
 | Cast | [cast](#cast) | n/a |
 | OfType | [ofType](#oftype) | n/a |
-
-## Maven
-
-```XML
-<dependency>
-    <groupId>com.github.jlinqer</groupId>
-    <artifactId>jlinqer</artifactId>
-    <version>0.1.0</version>
-</dependency>
-```
-
-## Usage
-
-The following operations are available.
 
 ### Where
 
