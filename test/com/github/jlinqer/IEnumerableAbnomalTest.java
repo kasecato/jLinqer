@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static org.hamcrest.Matchers.instanceOf;
@@ -349,6 +350,45 @@ public class IEnumerableAbnomalTest {
         // act and assert
         try {
             first.intersect(null);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void join_abnormal() throws Exception {
+        // arrange
+        List<Integer> outer = new List<>(1, 2, 3);
+        List<Integer> inner = new List<>(1, 2, 3);
+        Function<Integer, Integer> outerKey = x -> x;
+        Function<Integer, Integer> innerKey = y -> y;
+        BiFunction<Integer, Integer, Integer> selector = (x, y) -> x + y;
+
+        // act and assert
+        try {
+            outer.join(null, outerKey, innerKey, selector);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+        try {
+            outer.join(inner, null, innerKey, selector);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+        try {
+            outer.join(inner, outerKey, null, selector);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+        try {
+            outer.join(inner, outerKey, innerKey, null);
             fail();
         } catch (Exception e) {
             assertThat(e, instanceOf(IllegalArgumentException.class));

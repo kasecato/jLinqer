@@ -537,6 +537,53 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
+     * Correlates the elements of two sequences based on matching keys. The default equality comparer is used to compare keys.
+     *
+     * @param inner            The sequence to join to the first sequence.
+     * @param outerKeySelector A function to extract the join key from each element of the first sequence.
+     * @param innerKeySelector A function to extract the join key from each element of the second sequence.
+     * @param resultSelector   A function to create a result element from two matching elements.
+     * @param <TInner>         The type of the elements of the second sequence.
+     * @param <TKey>           The type of the keys returned by the key selector functions.
+     * @param <TResult>        The type of the result elements.
+     * @return An IEnumerable&lt;T&gt; that has elements of type TResult that are obtained by performing an inner join on two sequences.
+     */
+    default <TInner, TKey, TResult> IEnumerable<TResult> join(IEnumerable<TInner> inner, Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector, BiFunction<TSource, TInner, TResult> resultSelector) {
+        if (inner == null) throw new IllegalArgumentException("inner");
+        if (outerKeySelector == null) throw new IllegalArgumentException("outerKeySelector");
+        if (innerKeySelector == null) throw new IllegalArgumentException("innerKeySelector");
+        if (resultSelector == null) throw new IllegalArgumentException("resultSelector");
+
+        return () -> {
+            java.util.Queue<TResult> queue = new ArrayDeque<>();
+
+            for (TSource outerItem : this) {
+                TKey outerKey = outerKeySelector.apply(outerItem);
+
+                for (TInner innerItem : inner) {
+                    TKey innerKey = innerKeySelector.apply(innerItem);
+                    boolean isMatch = Objects.equals(outerKey, innerKey);
+                    if (isMatch) {
+                        queue.add(resultSelector.apply(outerItem, innerItem));
+                    }
+                }
+            }
+
+            return new Iterator<TResult>() {
+                @Override
+                public boolean hasNext() {
+                    return queue.size() != 0;
+                }
+
+                @Override
+                public TResult next() {
+                    return queue.remove();
+                }
+            };
+        };
+    }
+
+    /**
      * ﻿﻿Returns the last element of a sequence.
      *
      * @return ﻿The value at the last position in the source sequence.

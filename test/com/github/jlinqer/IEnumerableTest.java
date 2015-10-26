@@ -8,6 +8,8 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 
@@ -299,6 +301,47 @@ public class IEnumerableTest {
         assertEquals(2, actual.size());
         assertEquals(1, actual.get(0).intValue());
         assertEquals(3, actual.get(1).intValue());
+    }
+
+    @Test
+    public void join() throws Exception {
+        // arrange
+        class Javascript {
+            String name;
+            int age;
+
+            Javascript(String name, int age) {
+                this.name = name;
+                this.age = age;
+            }
+        }
+
+        List<Javascript> outer = new List<>(
+                new Javascript("Angular", 1),
+                new Javascript("React", 4),
+                new Javascript("ES2016", 5)
+        );
+        List<Javascript> inner = new List<>(
+                new Javascript("Angular", 2),
+                new Javascript("Angular", 3),
+                new Javascript("ES2016", 6),
+                new Javascript("ES7", 7)
+        );
+
+        // act
+        Function<Javascript, String> outerKey = (x) -> x.name;
+        Function<Javascript, String> innerKey = (y) -> y.name;
+        BiFunction<Javascript, Javascript, Javascript> selector = (x, y) -> new Javascript(x.name, y.age);
+        List<Javascript> actual = outer.join(inner, outerKey, innerKey, selector).toList();
+
+        // assert
+        assertEquals(3, actual.size());
+        assertEquals("Angular", actual.get(0).name);
+        assertEquals("Angular", actual.get(1).name);
+        assertEquals("ES2016", actual.get(2).name);
+        assertEquals(2, actual.get(0).age);
+        assertEquals(3, actual.get(1).age);
+        assertEquals(6, actual.get(2).age);
     }
 
     @Test

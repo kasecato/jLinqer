@@ -305,6 +305,37 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
+        public void Join()
+        {
+            List<Javascript> outer = new List<Javascript>() {
+                    new Javascript("Angular", 1),
+                    new Javascript("React", 4),
+                    new Javascript("ES2016", 5)
+            };
+            List<Javascript> inner = new List<Javascript>() {
+                    new Javascript("Angular", 2),
+                    new Javascript("Angular", 3),
+                    new Javascript("ES2016", 6),
+                    new Javascript("ES7", 7)
+            };
+
+            // act
+            Func<Javascript, String> outerKey = (x) => x.Name;
+            Func<Javascript, String> innerKey = (y) => y.Name;
+            Func<Javascript, Javascript, Javascript> selector = (x, y) => new Javascript(x.Name, y.Age);
+            List<Javascript> actual = outer.Join(inner, outerKey, innerKey, selector).ToList();
+
+            // assert
+            Assert.AreEqual(3, actual.Count);
+            Assert.AreEqual("Angular", actual.ElementAt(0).Name);
+            Assert.AreEqual("Angular", actual.ElementAt(1).Name);
+            Assert.AreEqual("ES2016", actual.ElementAt(2).Name);
+            Assert.AreEqual(2, actual.ElementAt(0).Age);
+            Assert.AreEqual(3, actual.ElementAt(1).Age);
+            Assert.AreEqual(6, actual.ElementAt(2).Age);
+        }
+
+        [TestMethod]
         public void Last()
         {
             // arrange

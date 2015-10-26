@@ -21,7 +21,7 @@ The following operations are available.
 
 ##LINQ - jLinqer Matrix
 
-| LINQ(C#) | jLinqer(Java) | Stream(Java) |
+| LINQ(C#) | jLinqer (Java 8) | Stream (Java 8) |
 |------|-------|--------|
 | Where | [where](#where) | filter |
 | Select | [select](#select) | map |
@@ -40,7 +40,7 @@ The following operations are available.
 | Intersect | [intersect](#intersect) | n/a |
 | Union | [union](#union) | n/a |
 | Except | [except](#except) | n/a |
-| Join | n/a | n/a |
+| Join | [join](#join) | n/a |
 | GroupJoin | n/a | n/a |
 | Reverse | [reverse](#reverse) | n/a |
 | Zip | [zip](#zip) | n/a |
@@ -269,6 +269,35 @@ List<Integer> second = new List<>(1, 3);
 List<Integer> actual = first.except(second).toList();
 
 assertEquals(2, actual.get(0).intValue());
+```
+
+### Join
+
+```Java
+List<Javascript> outer = new List<>(
+        new Javascript("Angular", 1),
+        new Javascript("React"  , 4),
+        new Javascript("ES2016" , 5)
+);
+List<Javascript> inner = new List<>(
+        new Javascript("Angular", 2),
+        new Javascript("Angular", 3),
+        new Javascript("ES2016" , 6),
+        new Javascript("ES7"    , 7)
+);
+
+Function<Javascript, String> outerKey = (x) -> x.name;
+Function<Javascript, String> innerKey = (y) -> y.name;
+BiFunction<Javascript, Javascript, Javascript> selector = (x, y) -> new Javascript(x.name, y.age);
+List<Javascript> actual = outer.join(inner, outerKey, innerKey, selector).toList();
+
+assertEquals(3, actual.size());
+assertEquals("Angular", actual.get(0).name);
+assertEquals("Angular", actual.get(1).name);
+assertEquals("ES2016", actual.get(2).name);
+assertEquals(2, actual.get(0).age);
+assertEquals(3, actual.get(1).age);
+assertEquals(6, actual.get(2).age);
 ```
 
 ### Reverse
