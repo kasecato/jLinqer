@@ -11,7 +11,7 @@
 <dependency>
     <groupId>com.github.jlinqer</groupId>
     <artifactId>jlinqer</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -41,7 +41,7 @@ The following operations are available.
 | Union | [union](#union) | n/a |
 | Except | [except](#except) | n/a |
 | Join | [join](#join) | n/a |
-| GroupJoin | n/a | n/a |
+| GroupJoin | [groupJoin](#groupjoin) | n/a |
 | Reverse | [reverse](#reverse) | n/a |
 | Zip | [zip](#zip) | n/a |
 |||||
@@ -294,10 +294,40 @@ List<Javascript> actual = outer.join(inner, outerKey, innerKey, selector).toList
 assertEquals(3, actual.size());
 assertEquals("Angular", actual.get(0).name);
 assertEquals("Angular", actual.get(1).name);
-assertEquals("ES2016", actual.get(2).name);
+assertEquals("ES2016" , actual.get(2).name);
 assertEquals(2, actual.get(0).age);
 assertEquals(3, actual.get(1).age);
 assertEquals(6, actual.get(2).age);
+```
+
+### GroupJoin
+
+```Java
+List<Javascript> outer = new List<>(
+        new Javascript("Angular", 1),
+        new Javascript("React"  , 4),
+        new Javascript("ES2016" , 5)
+);
+List<Javascript> inner = new List<>(
+        new Javascript("Angular", 2),
+        new Javascript("Angular", 3),
+        new Javascript("ES2016" , 6),
+        new Javascript("ES7"    , 7)
+);
+
+Function<Javascript, String> outerKey = (x) -> x.name;
+Function<Javascript, String> innerKey = (y) -> y.name;
+BiFunction<Javascript, IEnumerable<Javascript>, Javascript> selector = (x, y) -> new Javascript(x.name, y.select(z -> z.age));
+List<Javascript> actual = outer.groupJoin(inner, outerKey, innerKey, selector).toList();
+
+assertEquals(3, actual.size());
+assertEquals("Angular", actual.get(0).name);
+assertEquals("React"  , actual.get(1).name);
+assertEquals("ES2016" , actual.get(2).name);
+assertEquals(2, actual.get(0).ages.elementAt(0));
+assertEquals(3, actual.get(0).ages.elementAt(1));
+assertEquals(0, actual.get(1).ages.count());
+assertEquals(6, actual.get(2).ages.elementAt(0));
 ```
 
 ### Reverse

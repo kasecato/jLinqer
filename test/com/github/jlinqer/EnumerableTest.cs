@@ -289,6 +289,38 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
+        public void GroupJoin()
+        {
+            List<Javascript> outer = new List<Javascript>() {
+                    new Javascript("Angular", 1),
+                    new Javascript("React", 4),
+                    new Javascript("ES2016", 5)
+            };
+            List<Javascript> inner = new List<Javascript>() {
+                    new Javascript("Angular", 2),
+                    new Javascript("Angular", 3),
+                    new Javascript("ES2016", 6),
+                    new Javascript("ES7", 7)
+            };
+
+            // act
+            Func<Javascript, String> outerKey = (x) => x.Name;
+            Func<Javascript, String> innerKey = (y) => y.Name;
+            Func<Javascript, IEnumerable<Javascript>, Javascript> selector = (x, y) => new Javascript(x.Name, y.Select(z => z.Age));
+            List<Javascript> actual = outer.GroupJoin(inner, outerKey, innerKey, selector).ToList();
+
+            // assert
+            Assert.AreEqual(3, actual.Count);
+            Assert.AreEqual("Angular", actual.ElementAt(0).Name);
+            Assert.AreEqual("React", actual.ElementAt(1).Name);
+            Assert.AreEqual("ES2016", actual.ElementAt(2).Name);
+            Assert.AreEqual(2, actual.ElementAt(0).Ages.ElementAt(0));
+            Assert.AreEqual(3, actual.ElementAt(0).Ages.ElementAt(1));
+            Assert.AreEqual(0, actual.ElementAt(1).Ages.Count());
+            Assert.AreEqual(6, actual.ElementAt(2).Ages.ElementAt(0));
+        }
+
+        [TestMethod]
         public void Intersect()
         {
             // arrange
@@ -866,6 +898,7 @@ namespace Com.JLinqer
     {
         public String Name { get; set; }
         public int Age { get; set; }
+        public IEnumerable<int> Ages { get; set; }
         public String Version { get; set; }
         public List<String> Ver { get; set; }
 
@@ -887,6 +920,12 @@ namespace Com.JLinqer
         {
             this.Name = name;
             this.Age = age;
+        }
+
+        public Javascript(String name, IEnumerable<int> ages)
+        {
+            this.Name = name;
+            this.Ages = ages;
         }
     }
 }

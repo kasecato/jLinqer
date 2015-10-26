@@ -343,6 +343,45 @@ public class IEnumerableAbnomalTest {
     }
 
     @Test
+    public void groupJoin_abnormal() throws Exception {
+        // arrange
+        List<Integer> outer = new List<>(1, 2, 3);
+        List<Integer> inner = new List<>(1, 2, 3);
+        Function<Integer, Integer> outerKey = x -> x;
+        Function<Integer, Integer> innerKey = y -> y;
+        BiFunction<Integer, IEnumerable<Integer>, Integer> selector = (x, y) -> x;
+
+        // act and assert
+        try {
+            outer.groupJoin(null, outerKey, innerKey, selector);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+        try {
+            outer.groupJoin(inner, null, innerKey, selector);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+        try {
+            outer.groupJoin(inner, outerKey, null, selector);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+
+        try {
+            outer.groupJoin(inner, outerKey, innerKey, null);
+            fail();
+        } catch (Exception e) {
+            assertThat(e, instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
     public void intersect_abnormal() throws Exception {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);

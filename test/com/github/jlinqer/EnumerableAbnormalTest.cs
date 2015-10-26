@@ -390,6 +390,59 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
+        public void GroupJoin_abnormal()
+        {
+            // arrange
+            List<int> outer = new List<int>() { 1, 2, 3 };
+            List<int> inner = new List<int>() { 1, 2, 3 };
+            Func<int, int> outerKey = x => x;
+            Func<int, int> innerKey = y => y;
+            Func<int, IEnumerable<int>, int> selector = (x, y) => x;
+            Func<int, IEnumerable<int>, int> selectorNull = null;
+
+            // act and assert
+            try
+            {
+                outer.GroupJoin(null, outerKey, innerKey, selector);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e is ArgumentNullException);
+            }
+
+            try
+            {
+                outer.GroupJoin(inner, null, innerKey, selector);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e is ArgumentNullException);
+            }
+
+            try
+            {
+                outer.GroupJoin(inner, outerKey, null, selector);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e is ArgumentNullException);
+            }
+
+            try
+            {
+                outer.GroupJoin(inner, outerKey, innerKey, selectorNull);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e is ArgumentNullException);
+            }
+        }
+
+        [TestMethod]
         public void Intersect_abnormal()
         {
             // arrange
