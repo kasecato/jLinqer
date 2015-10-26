@@ -479,6 +479,56 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
     }
 
     /**
+     * Correlates the elements of two sequences based on equality of keys and groups the results. The default equality comparer is used to compare keys.
+     *
+     * @param inner            The sequence to join to the first sequence.
+     * @param outerKeySelector A function to extract the join key from each element of the first sequence.
+     * @param innerKeySelector A function to extract the join key from each element of the second sequence.
+     * @param resultSelector   A function to create a result element from an element from the first sequence and a collection of matching elements from the second sequence.
+     * @param <TInner>         The type of the elements of the second sequence.
+     * @param <TKey>           The type of the keys returned by the key selector functions.
+     * @param <TResult>        The type of the result elements.
+     * @return An IEnumerable&lt;T&gt; that contains elements of type TResult that are obtained by performing a grouped join on two sequences.
+     * @throws IllegalArgumentException inner or outerKeySelector or innerKeySelector or resultSelector is null.
+     */
+    default <TInner, TKey, TResult> IEnumerable<TResult> groupJoin(IEnumerable<TInner> inner, Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector, BiFunction<TSource, IEnumerable<TInner>, TResult> resultSelector) throws IllegalArgumentException {
+        if (inner == null) throw new IllegalArgumentException("inner");
+        if (outerKeySelector == null) throw new IllegalArgumentException("outerKeySelector");
+        if (innerKeySelector == null) throw new IllegalArgumentException("innerKeySelector");
+        if (resultSelector == null) throw new IllegalArgumentException("resultSelector");
+
+        return () -> {
+            java.util.Queue<TResult> queue = new ArrayDeque<>();
+
+            for (TSource outerItem : this) {
+                TKey outerKey = outerKeySelector.apply(outerItem);
+
+                List<TInner> elem = new List<>();
+                for (TInner innerItem : inner) {
+                    TKey innerKey = innerKeySelector.apply(innerItem);
+                    boolean isMatch = Objects.equals(outerKey, innerKey);
+                    if (isMatch) {
+                        elem.add(innerItem);
+                    }
+                }
+                queue.add(resultSelector.apply(outerItem, elem));
+            }
+
+            return new Iterator<TResult>() {
+                @Override
+                public boolean hasNext() {
+                    return queue.size() != 0;
+                }
+
+                @Override
+                public TResult next() {
+                    return queue.remove();
+                }
+            };
+        };
+    }
+
+    /**
      * ﻿Projects each element of a sequence into a new form.
      *
      * @param selector  ﻿A transform function to apply to each element.
@@ -533,6 +583,54 @@ public interface IEnumerable<TSource> extends Iterable<TSource> {
             }
 
             return first.iterator();
+        };
+    }
+
+    /**
+     * Correlates the elements of two sequences based on matching keys. The default equality comparer is used to compare keys.
+     *
+     * @param inner            The sequence to join to the first sequence.
+     * @param outerKeySelector A function to extract the join key from each element of the first sequence.
+     * @param innerKeySelector A function to extract the join key from each element of the second sequence.
+     * @param resultSelector   A function to create a result element from two matching elements.
+     * @param <TInner>         The type of the elements of the second sequence.
+     * @param <TKey>           The type of the keys returned by the key selector functions.
+     * @param <TResult>        The type of the result elements.
+     * @return An IEnumerable&lt;T&gt; that has elements of type TResult that are obtained by performing an inner join on two sequences.
+     * @throws IllegalArgumentException inner or outerKeySelector or innerKeySelector or resultSelector is null.
+     */
+    default <TInner, TKey, TResult> IEnumerable<TResult> join(IEnumerable<TInner> inner, Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector, BiFunction<TSource, TInner, TResult> resultSelector) throws IllegalArgumentException {
+        if (inner == null) throw new IllegalArgumentException("inner");
+        if (outerKeySelector == null) throw new IllegalArgumentException("outerKeySelector");
+        if (innerKeySelector == null) throw new IllegalArgumentException("innerKeySelector");
+        if (resultSelector == null) throw new IllegalArgumentException("resultSelector");
+
+        return () -> {
+            java.util.Queue<TResult> queue = new ArrayDeque<>();
+
+            for (TSource outerItem : this) {
+                TKey outerKey = outerKeySelector.apply(outerItem);
+
+                for (TInner innerItem : inner) {
+                    TKey innerKey = innerKeySelector.apply(innerItem);
+                    boolean isMatch = Objects.equals(outerKey, innerKey);
+                    if (isMatch) {
+                        queue.add(resultSelector.apply(outerItem, innerItem));
+                    }
+                }
+            }
+
+            return new Iterator<TResult>() {
+                @Override
+                public boolean hasNext() {
+                    return queue.size() != 0;
+                }
+
+                @Override
+                public TResult next() {
+                    return queue.remove();
+                }
+            };
         };
     }
 
