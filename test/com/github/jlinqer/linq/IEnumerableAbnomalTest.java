@@ -1,7 +1,6 @@
-package com.github.jlinqer;
+package com.github.jlinqer.linq;
 
 import com.github.jlinqer.collections.List;
-import com.github.jlinqer.linq.IEnumerable;
 import org.junit.Test;
 
 import java.math.BigDecimal;
