@@ -12,7 +12,7 @@ namespace Com.JLinqer
     public class EnumerableAbnormalTest
     {
         [TestMethod]
-        public void Aggregate_abnormal()
+        void Aggregate_abnormal()
         {
             // arrange
             List<int> list = new List<int>();
@@ -40,7 +40,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void All_abnormal()
+        void All_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -58,7 +58,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Any_abnormal()
+        void Any_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -76,7 +76,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Average_abnormal()
+        void Average_abnormal()
         {
             // arrange
             List<int> listInt = new List<int>() { 1, 2, 3, 4 };
@@ -178,7 +178,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Average_overflow()
+        void Average_overflow()
         {
             // arrange
             List<int> listOverflowInt = new List<int>() { int.MaxValue, 1 };
@@ -227,7 +227,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Concat_abnormal()
+        void Concat_abnormal()
         {
             // arrange
             List<Object> list = new List<Object>();
@@ -245,7 +245,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Count_abnormal()
+        void Count_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -273,7 +273,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ElementAt_abnormal()
+        void ElementAt_abnormal()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -301,7 +301,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Except_abnormal()
+        void Except_abnormal()
         {
             // arrange
             List<int> first = new List<int>() { 1, 2, 3 };
@@ -319,7 +319,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void FirstOrDefault_abnormal()
+        void FirstOrDefault_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -337,7 +337,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void First_abnormal()
+        void First_abnormal()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -366,7 +366,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void GroupBy_abnormal()
+        void GroupBy_abnormal()
         {
             // arrange
 
@@ -390,7 +390,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void GroupJoin_abnormal()
+        void GroupJoin_abnormal()
         {
             // arrange
             List<int> outer = new List<int>() { 1, 2, 3 };
@@ -443,7 +443,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Intersect_abnormal()
+        void Intersect_abnormal()
         {
             // arrange
             List<int> first = new List<int>() { 1, 2, 3 };
@@ -461,7 +461,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Join_abnormal()
+        void Join_abnormal()
         {
             // arrange
             List<int> outer = new List<int>() { 1, 2, 3 };
@@ -514,7 +514,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Last_abnormal()
+        void Last_abnormal()
         {
             // arrange
             List<int> listEmpty = new List<int>();
@@ -552,7 +552,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Max_abnormal()
+        void Max_abnormal()
         {
             // arrange
             List<int> listInt = new List<int>();
@@ -580,7 +580,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Min_abnormal()
+        void Min_abnormal()
         {
             // arrange
             List<int> listInt = new List<int>();
@@ -608,7 +608,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void OrderByDescending_abnormal()
+        void OrderByDescending_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -627,7 +627,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void OrderBy_abnormal()
+        void OrderBy_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -646,7 +646,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Range_abnormal()
+        void Range_abnormal()
         {
             // act and assert
             try
@@ -671,7 +671,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Repeat_abnormal()
+        void Repeat_abnormal()
         {
             // act and assert
             try
@@ -686,7 +686,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Select_abnormal()
+        void Select_abnormal()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -705,7 +705,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void SequenceEqual_abnormal()
+        void SequenceEqual_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -723,7 +723,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void SingleOrDefault_abnormal()
+        void SingleOrDefault_abnormal()
         {
             // arrange
             List<int> list = new List<int>() { 1 };
@@ -741,7 +741,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Single_abnormal()
+        void Single_abnormal()
         {
             // arrange
             List<int> list = new List<int>() { 1 };
@@ -780,7 +780,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void SkipWhile_abnormal()
+        void SkipWhile_abnormal()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3, 4, 5 };
@@ -799,7 +799,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Sum_abnormal()
+        void Sum_abnormal()
         {
             // arrange
             List<int> listInt = new List<int>();
@@ -855,7 +855,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Sum_overflow()
+        void Sum_overflow()
         {
             // arrange
             List<int> listOverflowInt = new List<int>() { int.MaxValue, 1 };
@@ -904,7 +904,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void TakeWhile_abnormal()
+        void TakeWhile_abnormal()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3, 4, 5 };
@@ -923,7 +923,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ThenByDescending_abnormal()
+        void ThenByDescending_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -942,7 +942,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ThenBy_abnormal()
+        void ThenBy_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -961,7 +961,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ToDictionary_abnormal()
+        void ToDictionary_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -980,7 +980,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ToDictionarySelect_abnormal()
+        void ToDictionarySelect_abnormal()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -1000,7 +1000,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Union_abnormal()
+        void Union_abnormal()
         {
             // arrange
             List<int> first = new List<int>() { 1, 2, 3 };
@@ -1018,7 +1018,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Where_abnormal()
+        void Where_abnormal()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -1038,7 +1038,7 @@ namespace Com.JLinqer
 
 
         [TestMethod]
-        public void Where_Index_abnormal()
+        void Where_Index_abnormal()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -1057,7 +1057,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Zip_abnormal()
+        void Zip_abnormal()
         {
             // arrange
             List<int> first = new List<int>() { 1, 2, 3 };

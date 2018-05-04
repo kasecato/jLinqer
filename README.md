@@ -1,6 +1,6 @@
-#jLinqer
-[![Circle CI](https://circleci.com/gh/k--kato/jLinqer.svg?style=shield&circle-token=5a717ccbb33b6a206644b5e630807fc9dff1597f)](https://circleci.com/gh/k--kato/jLinqer)
-[![Coverage Status](https://coveralls.io/repos/k--kato/jLinqer/badge.svg?branch=master&service=github)](https://coveralls.io/github/k--kato/jLinqer?branch=master)
+# jLinqer
+[![Circle CI](https://circleci.com/gh/kasecato/jLinqer.svg?style=shield&circle-token=5a717ccbb33b6a206644b5e630807fc9dff1597f)](https://circleci.com/gh/kasecato/jLinqer)
+[![Coverage Status](https://coveralls.io/repos/kasecato/jLinqer/badge.svg?branch=master&service=github)](https://coveralls.io/github/kasecato/jLinqer?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jlinqer/jlinqer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.jlinqer/jlinqer)
 [![License: MIT](http://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
@@ -12,7 +12,7 @@
 <dependency>
     <groupId>com.github.jlinqer</groupId>
     <artifactId>jlinqer</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -20,7 +20,7 @@
 
 The following operations are available.
 
-##LINQ - jLinqer Matrix
+## LINQ - jLinqer Matrix
 
 | LINQ(C#) | jLinqer (Java 8) | Stream (Java 8) |
 |------|-------|--------|
@@ -608,7 +608,7 @@ assertEquals(1  , actualInt.get(0).intValue());
 assertEquals(3  , actualInt.get(1).intValue());
 ```
 
-#References
+# References
 
 1. Microsoft Reference Source, "Enumerable.cs", http://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs
 1. GitHub, "javaLinq", https://github.com/sircodesalotOfTheRound/javaLinq

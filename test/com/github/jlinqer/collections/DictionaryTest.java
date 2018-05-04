@@ -1,21 +1,21 @@
 package com.github.jlinqer.collections;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Keisuke Kato
  */
-public class DictionaryTest {
+class DictionaryTest {
 // -------------------------- OTHER METHODS --------------------------
 
     @Test
-    public void functions() throws Exception {
+    void functions() {
         // arrange
         Dictionary<String, Integer> dic = new Dictionary<>();
 

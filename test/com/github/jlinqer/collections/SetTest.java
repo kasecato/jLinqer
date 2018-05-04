@@ -1,18 +1,18 @@
 package com.github.jlinqer.collections;
 
 import com.github.jlinqer.linq.IEnumerable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Keisuke Kato
  */
-public class SetTest {
+class SetTest {
 // -------------------------- OTHER METHODS --------------------------
 
     @Test
-    public void constructorIEnumerable() throws Exception {
+    void constructorIEnumerable() {
         // arrange
         IEnumerable<String> list = new List<>("ES7", "ES7", "ES2016").where(x -> x.startsWith("ES"));
 
@@ -26,7 +26,7 @@ public class SetTest {
     }
 
     @Test
-    public void constructorItems() throws Exception {
+    void constructorItems() {
         // act
         Set<String> actual = new Set<>("ES2015", "ES2015");
 
@@ -36,7 +36,7 @@ public class SetTest {
     }
 
     @Test
-    public void functions() throws Exception {
+    void functions() {
         // arrange
         Set<String> set = new Set<>("ES2015", "ES2015", "ES6", "ES2016");
 

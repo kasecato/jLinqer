@@ -1,21 +1,21 @@
 package com.github.jlinqer.collections;
 
 import com.github.jlinqer.linq.IEnumerable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.ListIterator;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Keisuke Kato
  */
-public class ListTest {
+class ListTest {
 // -------------------------- OTHER METHODS --------------------------
 
     @Test
-    public void constructorIEnumerable() throws Exception {
+    void constructorIEnumerable() {
         // arrange
         IEnumerable<String> list = new List<>("ES7", "ES7", "ES2016").where(x -> x.startsWith("ES"));
 
@@ -30,7 +30,7 @@ public class ListTest {
     }
 
     @Test
-    public void constructorItems() throws Exception {
+    void constructorItems() {
         // act
         List<String> actual = new List<>("ES2015", "ES2015");
 
@@ -40,7 +40,7 @@ public class ListTest {
     }
 
     @Test
-    public void functions() throws Exception {
+    void functions() {
         // arrange
         List<String> list = new List<>("ES2015", "ES2015", "ES6", "ES2016");
 

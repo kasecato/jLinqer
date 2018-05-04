@@ -1,7 +1,7 @@
 package com.github.jlinqer.linq;
 
 import com.github.jlinqer.collections.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.function.BiFunction;
@@ -9,67 +9,49 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Created by Keisuke Kato
  */
-public class IEnumerableAbnomalTest {
+class IEnumerableAbnomalTest {
 // -------------------------- OTHER METHODS --------------------------
 
     @Test
-    public void aggregate_abnormal() throws Exception {
+    void aggregate_abnormal() {
         // arrange
         List<Integer> list = new List<>();
 
         // act and assert
-        try {
-            list.aggregate(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.aggregate(null));
 
-        try {
-            list.aggregate((sum, elem) -> sum + elem);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(UnsupportedOperationException.class,
+                () -> list.aggregate((sum, elem) -> sum + elem));
     }
 
     @Test
-    public void all_abnormal() throws Exception {
+    void all_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.all(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.all(null));
     }
 
     @Test
-    public void any_abnormal() throws Exception {
+    void any_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.any(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.any(null));
     }
 
     @Test
-    public void average_abnormal() throws Exception {
+    void average_abnormal() {
         // arrange
         List<Integer> listInt = new List<>(1, 2, 3, 4);
         List<Long> listLong = new List<>(1l, 2l, 3l, 4l);
@@ -87,61 +69,33 @@ public class IEnumerableAbnomalTest {
         List<BigDecimal> listBigDecimalEmpty = new List<>();
 
         // act and assert
-        try {
-            listInt.averageInt(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listIntEmpty.averageInt(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listInt.averageInt(null));
 
-        try {
-            listLong.averageLong(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listLongEmpty.averageLong(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(UnsupportedOperationException.class,
+                () -> listIntEmpty.averageInt(Function.identity()));
 
-        try {
-            listDouble.averageDouble(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listDoubleEmpty.averageDouble(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listLong.averageLong(null));
 
-        try {
-            listBigDecimal.averageBigDecimal(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listBigDecimalEmpty.averageBigDecimal(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(UnsupportedOperationException.class,
+                () -> listLongEmpty.averageLong(Function.identity()));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> listDouble.averageDouble(null));
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> listDoubleEmpty.averageDouble(Function.identity()));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> listBigDecimal.averageBigDecimal(null));
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> listBigDecimalEmpty.averageBigDecimal(Function.identity()));
     }
 
     @Test
-    public void average_overflow() throws Exception {
+    void average_overflow() {
         // arrange
         List<Integer> listOverflowInt = new List<>(Integer.MAX_VALUE, 1);
         List<Integer> listUnderflowInt = new List<>(Integer.MIN_VALUE, -1);
@@ -149,172 +103,112 @@ public class IEnumerableAbnomalTest {
         List<Long> listUnderflowLong = new List<>(Long.MIN_VALUE, -1l);
 
         // act and assert
-        try {
-            listOverflowInt.averageInt(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(ArithmeticException.class));
-        }
-        try {
-            listUnderflowInt.averageInt(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(ArithmeticException.class));
-        }
+        assertThrows(ArithmeticException.class,
+                () -> listOverflowInt.averageInt(Function.identity()));
 
-        try {
-            listOverflowLong.averageLong(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(ArithmeticException.class));
-        }
-        try {
-            listUnderflowLong.averageLong(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(ArithmeticException.class));
-        }
+        assertThrows(ArithmeticException.class,
+                () -> listUnderflowInt.averageInt(Function.identity()));
+
+        assertThrows(ArithmeticException.class,
+                () -> listOverflowLong.averageLong(Function.identity()));
+
+        assertThrows(ArithmeticException.class,
+                () -> listUnderflowLong.averageLong(Function.identity()));
     }
 
     @Test
-    public void cast_abnormal() throws Exception {
+    void cast_abnormal() {
         // arrange
         List<Object> list = new List<>();
 
         // act and assert
-        try {
-            list.cast(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            list.cast(Integer.class);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.cast(null));
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> list.cast(Integer.class));
     }
 
     @Test
-    public void concat_abnormal() throws Exception {
+    void concat_abnormal() {
         // arrange
         List<Object> list = new List<>();
 
         // act and assert
-        try {
-            list.concat(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.concat(null));
     }
 
     @Test
-    public void count_abnormal() throws Exception {
+    void count_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.count(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.count(null));
 
-        try {
-            list.longCount(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.longCount(null));
     }
 
     @Test
-    public void elementAt_abnormal() throws Exception {
+    void elementAt_abnormal() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
         // act and assert
-        try {
-            list.elementAt(-1);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IndexOutOfBoundsException.class));
-        }
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> list.elementAt(-1));
 
-        try {
-            list.elementAt(3);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IndexOutOfBoundsException.class));
-        }
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> list.elementAt(3));
     }
 
     @Test
-    public void empty_abnormal() throws Exception {
+    void empty_abnormal() {
         // act and assert
-        try {
-            IEnumerable.empty(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> IEnumerable.empty(null));
     }
 
     @Test
-    public void except_abnormal() throws Exception {
+    void except_abnormal() {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
 
         // act and assert
-        try {
-            first.except(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> first.except(null));
     }
 
     @Test
-    public void firstOrDefault_abnormal() throws Exception {
+    void firstOrDefault_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.firstOrDefault(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.firstOrDefault(null));
     }
 
     @Test
-    public void first_abnormal() throws Exception {
+    void first_abnormal() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
         List<Integer> listEmpty = new List<>();
 
         // act and assert
-        try {
-            listEmpty.first();
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(UnsupportedOperationException.class,
+                () -> listEmpty.first());
 
-        try {
-            list.first(x -> x == 4);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> list.first(x -> x == 4));
     }
 
     @Test
-    public void groupBy_abnormal() throws Exception {
+    void groupBy_abnormal() {
         // arrange
         class Javascript {
             String name;
@@ -333,16 +227,12 @@ public class IEnumerableAbnomalTest {
         );
 
         // act and assert
-        try {
-            list.groupBy(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.groupBy(null));
     }
 
     @Test
-    public void groupJoin_abnormal() throws Exception {
+    void groupJoin_abnormal() {
         // arrange
         List<Integer> outer = new List<>(1, 2, 3);
         List<Integer> inner = new List<>(1, 2, 3);
@@ -351,51 +241,31 @@ public class IEnumerableAbnomalTest {
         BiFunction<Integer, IEnumerable<Integer>, Integer> selector = (x, y) -> x;
 
         // act and assert
-        try {
-            outer.groupJoin(null, outerKey, innerKey, selector);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> outer.groupJoin(null, outerKey, innerKey, selector));
 
-        try {
-            outer.groupJoin(inner, null, innerKey, selector);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> outer.groupJoin(inner, null, innerKey, selector));
 
-        try {
-            outer.groupJoin(inner, outerKey, null, selector);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> outer.groupJoin(inner, outerKey, null, selector));
 
-        try {
-            outer.groupJoin(inner, outerKey, innerKey, null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> outer.groupJoin(inner, outerKey, innerKey, null));
     }
 
     @Test
-    public void intersect_abnormal() throws Exception {
+    void intersect_abnormal() {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
 
         // act and assert
-        try {
-            first.intersect(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> first.intersect(null));
     }
 
     @Test
-    public void join_abnormal() throws Exception {
+    void join_abnormal() {
         // arrange
         List<Integer> outer = new List<>(1, 2, 3);
         List<Integer> inner = new List<>(1, 2, 3);
@@ -404,267 +274,170 @@ public class IEnumerableAbnomalTest {
         BiFunction<Integer, Integer, Integer> selector = (x, y) -> x + y;
 
         // act and assert
-        try {
-            outer.join(null, outerKey, innerKey, selector);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> outer.join(null, outerKey, innerKey, selector));
 
-        try {
-            outer.join(inner, null, innerKey, selector);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> outer.join(inner, null, innerKey, selector));
 
-        try {
-            outer.join(inner, outerKey, null, selector);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> outer.join(inner, outerKey, null, selector));
 
-        try {
-            outer.join(inner, outerKey, innerKey, null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> outer.join(inner, outerKey, innerKey, null));
     }
 
     @Test
-    public void last_abnormal() throws Exception {
+    void last_abnormal() {
         // arrange
         List<Integer> listEmpty = new List<>();
 
         // act and assert
-        try {
-            listEmpty.last();
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(UnsupportedOperationException.class,
+                () -> listEmpty.last());
 
-        try {
-            listEmpty.last(x -> x == 0);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(UnsupportedOperationException.class,
+                () -> listEmpty.last(x -> x == 0));
 
-        try {
-            listEmpty.last(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listEmpty.last(null));
     }
 
     @Test
-    public void max_abnormal() throws Exception {
+    void max_abnormal() {
         // arrange
         List<Integer> listInt = new List<>();
 
         // act and assert
-        try {
-            listInt.max(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listInt.max(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listInt.max(null));
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> listInt.max(Function.identity()));
     }
 
     @Test
-    public void min_abnormal() throws Exception {
+    void min_abnormal() {
         // arrange
         List<Integer> listInt = new List<>();
 
         // act and assert
-        try {
-            listInt.min(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            listInt.min(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listInt.min(null));
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> listInt.min(Function.identity()));
     }
 
     @Test
-    public void ofType_abnormal() throws Exception {
+    void ofType_abnormal() {
         // arrange
         List<Object> list = new List<>(1, "2", 3, "4");
 
         // act and assert
-        try {
-            list.ofType(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.ofType(null));
     }
 
     @Test
-    public void orderByDescending_abnormal() throws Exception {
+    void orderByDescending_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.orderByDescending(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.orderByDescending(null));
     }
 
     @Test
-    public void orderBy_abnormal() throws Exception {
+    void orderBy_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.orderBy(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.orderBy(null));
     }
 
     @Test
-    public void range_abnormal() throws Exception {
+    void range_abnormal() {
         // act and assert
-        try {
-            IEnumerable.range(0, -1);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IndexOutOfBoundsException.class));
-        }
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> IEnumerable.range(0, -1));
 
-        try {
-            IEnumerable.range(2, Integer.MAX_VALUE);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IndexOutOfBoundsException.class));
-        }
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> IEnumerable.range(2, Integer.MAX_VALUE));
     }
 
     @Test
-    public void repeat_abnormal() throws Exception {
+    void repeat_abnormal() {
         // act and assert
-        try {
-            IEnumerable.repeat(null, "React", 10);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
-        try {
-            IEnumerable.repeat(String.class, "React", -1);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IndexOutOfBoundsException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> IEnumerable.repeat(null, "React", 10));
+
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> IEnumerable.repeat(String.class, "React", -1));
     }
 
     @Test
-    public void select_abnormal() throws Exception {
+    void select_abnormal() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
         // act and assert
-        try {
-            list.select(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.select(null));
     }
 
     @Test
-    public void sequenceEqual_abnormal() throws Exception {
+    void sequenceEqual_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.sequenceEqual(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.sequenceEqual(null));
     }
 
     @Test
-    public void singleOrDefault_abnormal() throws Exception {
+    void singleOrDefault_abnormal() {
         // arrange
         List<Integer> list = new List<>(1);
 
         // act and assert
-        try {
-            list.singleOrDefault(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.singleOrDefault(null));
     }
 
     @Test
-    public void single_abnormal() throws Exception {
+    void single_abnormal() {
         // arrange
         List<Integer> list = new List<>(1);
         List<Integer> listEmpty = new List<>();
 
         // act and assert
-        try {
-            listEmpty.single();
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(UnsupportedOperationException.class,
+                () -> listEmpty.single());
 
-        try {
-            listEmpty.single(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listEmpty.single(null));
 
-        try {
-            list.single(x -> x == 0);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(UnsupportedOperationException.class));
-        }
+        assertThrows(UnsupportedOperationException.class,
+                () -> list.single(x -> x == 0));
     }
 
     @Test
-    public void skipWhile_abnormal() throws Exception {
+    void skipWhile_abnormal() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3, 4, 5);
 
         // act and assert
-        try {
-            list.skipWhile(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.skipWhile(null));
     }
 
     @Test
-    public void sum_abnormal() throws Exception {
+    void sum_abnormal() {
         // arrange
         List<Integer> listInt = new List<>();
         List<Long> listLong = new List<>();
@@ -672,37 +445,21 @@ public class IEnumerableAbnomalTest {
         List<BigDecimal> listBigDecimal = new List<>();
 
         // act and assert
-        try {
-            listInt.sumInt(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listInt.sumInt(null));
 
-        try {
-            listLong.sumLong(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listLong.sumLong(null));
 
-        try {
-            listDouble.sumDouble(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listDouble.sumDouble(null));
 
-        try {
-            listBigDecimal.sumBigDecimal(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> listBigDecimal.sumBigDecimal(null));
     }
 
     @Test
-    public void sum_overflow() throws Exception {
+    void sum_overflow() {
         // arrange
         List<Integer> listOverflowInt = new List<>(Integer.MAX_VALUE, 1);
         List<Integer> listUnderflowInt = new List<>(Integer.MIN_VALUE, -1);
@@ -710,181 +467,124 @@ public class IEnumerableAbnomalTest {
         List<Long> listUnderflowLong = new List<>(Long.MIN_VALUE, -1l);
 
         // act and assert
-        try {
-            listOverflowInt.sumInt(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(ArithmeticException.class));
-        }
-        try {
-            listUnderflowInt.sumInt(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(ArithmeticException.class));
-        }
+        assertThrows(ArithmeticException.class,
+                () -> listOverflowInt.sumInt(Function.identity()));
 
-        try {
-            listOverflowLong.sumLong(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(ArithmeticException.class));
-        }
-        try {
-            listUnderflowLong.sumLong(x -> x);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(ArithmeticException.class));
-        }
+        assertThrows(ArithmeticException.class,
+                () -> listUnderflowInt.sumInt(Function.identity()));
+
+        assertThrows(ArithmeticException.class,
+                () -> listOverflowLong.sumLong(Function.identity()));
+
+        assertThrows(ArithmeticException.class,
+                () -> listUnderflowLong.sumLong(Function.identity()));
     }
 
     @Test
-    public void takeWhile_abnormal() throws Exception {
+    void takeWhile_abnormal() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3, 4, 5);
 
         // act and assert
-        try {
-            list.takeWhile(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.takeWhile(null));
     }
 
     @Test
-    public void thenByDescending_abnormal() throws Exception {
+    void thenByDescending_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.thenByDescending(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.thenByDescending(null));
     }
 
     @Test
-    public void thenBy_abnormal() throws Exception {
+    void thenBy_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.thenBy(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.thenBy(null));
     }
 
     @Test
-    public void toArray_abnormal() throws Exception {
+    void toArray_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
         Class<String> clazz = null;
 
         // act and assert
-        try {
-            list.toArray(clazz);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.toArray(clazz));
     }
 
     @Test
-    public void toDictionary_abnormal() throws Exception {
+    void toDictionary_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
         // act and assert
-        try {
-            list.toDictionary(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.toDictionary(null));
     }
 
     @Test
-    public void toDictionarySelect_abnormal() throws Exception {
+    void toDictionarySelect_abnormal() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
-        try {
-            list.toDictionary(x -> x.contains("c"), null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        // act and assert
+        assertThrows(IllegalArgumentException.class,
+                () -> list.toDictionary(x -> x.contains("c"), null));
     }
 
     @Test
-    public void union_abnormal() throws Exception {
+    void union_abnormal() {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
 
         // act and assert
-        try {
-            first.union(null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> first.union(null));
     }
 
     @Test
-    public void where_abnormal() throws Exception {
+    void where_abnormal() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
         Predicate<Integer> predicate = null;
 
         // act and assert
-        try {
-            list.where(predicate);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.where(predicate));
     }
 
     @Test
-    public void where_index_abnormal() throws Exception {
+    void where_index_abnormal() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
         BiPredicate<Integer, Integer> predicate = null;
 
         // act and assert
-        try {
-            list.where(predicate);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> list.where(predicate));
     }
 
     @Test
-    public void zip_abnormal() throws Exception {
+    void zip_abnormal() {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
         List<String> second = new List<>("Angular", "React", "Backbone");
         BiFunction<Integer, String, String> resultSelector = (x, y) -> String.format("%d, %s", x, y);
 
         // act and assert
-        try {
-            first.zip(null, resultSelector);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> first.zip(null, resultSelector));
 
-        try {
-            first.zip(second, null);
-            fail();
-        } catch (Exception e) {
-            assertThat(e, instanceOf(IllegalArgumentException.class));
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> first.zip(second, null));
     }
 }

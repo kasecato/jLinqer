@@ -2,7 +2,7 @@ package com.github.jlinqer.linq;
 
 import com.github.jlinqer.collections.Dictionary;
 import com.github.jlinqer.collections.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -10,16 +10,16 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Keisuke Kato
  */
-public class IEnumerableTest {
+class IEnumerableTest {
 // -------------------------- OTHER METHODS --------------------------
 
     @Test
-    public void all() throws Exception {
+    void all() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
@@ -33,7 +33,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void aggregate() throws Exception {
+    void aggregate() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
@@ -45,7 +45,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void any() throws Exception {
+    void any() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
         List<String> listEmpty = new List<>();
@@ -64,7 +64,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void average() throws Exception {
+    void average() {
         // arrange
         List<Integer> listInt = new List<>(1, 2, 3, 4);
         List<Long> listLong = new List<>(1l, 2l, 3l, 4l);
@@ -83,14 +83,14 @@ public class IEnumerableTest {
         BigDecimal actualBigDecimal = listBigDecimal.averageBigDecimal(x -> x);
 
         // assert
-        assertEquals(2.5d, actualInt, 0);
-        assertEquals(2.5d, actualLong, 0);
-        assertEquals(2.5d, actualDouble, 0);
-        assertEquals(2.5d, actualBigDecimal.doubleValue(), 0);
+        assertEquals(2.5d, actualInt);
+        assertEquals(2.5d, actualLong);
+        assertEquals(2.5d, actualDouble);
+        assertEquals(2.5d, actualBigDecimal.doubleValue());
     }
 
     @Test
-    public void cast() throws Exception {
+    void cast() {
         // arrange
         List<Object> list = new List<>(1, 2, 3);
 
@@ -104,7 +104,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void concat() throws Exception {
+    void concat() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
         List<Integer> listSecond = new List<>(4, 5, 6);
@@ -117,7 +117,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void count() throws Exception {
+    void count() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
@@ -141,7 +141,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void defaultIfEmpty() throws Exception {
+    void defaultIfEmpty() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
         List<String> listEmpty = new List<>();
@@ -160,7 +160,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void distinct() throws Exception {
+    void distinct() {
         // arrange
         List<Integer> list =
                 new List<>(
@@ -176,7 +176,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void elementAt() throws Exception {
+    void elementAt() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
@@ -188,7 +188,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void elementAtOrDefault() throws Exception {
+    void elementAtOrDefault() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
@@ -202,7 +202,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void empty() throws Exception {
+    void empty() {
         // act
         List<Double> actual = IEnumerable.empty(Double.class);
 
@@ -211,7 +211,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void except() throws Exception {
+    void except() {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
         List<Integer> second = new List<>(1, 3);
@@ -225,7 +225,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void first() throws Exception {
+    void first() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
@@ -239,7 +239,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void firstOrDefault() throws Exception {
+    void firstOrDefault() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
         List<String> listEmpty = new List<>();
@@ -258,7 +258,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void groupBy() throws Exception {
+    void groupBy() {
         // arrange
         class Javascript {
             String name;
@@ -288,7 +288,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void groupJoin() throws Exception {
+    void groupJoin() {
         // arrange
         class Javascript {
             String name;
@@ -335,7 +335,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void intersect() throws Exception {
+    void intersect() {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
         List<Integer> second = new List<>(1, 3);
@@ -350,7 +350,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void join() throws Exception {
+    void join() {
         // arrange
         class Javascript {
             String name;
@@ -391,7 +391,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void last() throws Exception {
+    void last() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
@@ -405,7 +405,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void lastOrDefault() throws Exception {
+    void lastOrDefault() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
         List<Integer> listEmpty = new List<>();
@@ -425,7 +425,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void max() throws Exception {
+    void max() {
         // arrange
         List<Integer> listInt = new List<>(1, 2, 3);
         List<Long> listLong = new List<>(1l, 2l, 3l);
@@ -443,14 +443,14 @@ public class IEnumerableTest {
         BigDecimal actualBigDecimal = listBigDecimal.max(x -> x);
 
         // assert
-        assertEquals(3, actualInt, 0);
-        assertEquals(3l, actualLong, 0);
-        assertEquals(3d, actualDouble, 0);
-        assertEquals(3d, actualBigDecimal.doubleValue(), 0);
+        assertEquals(3, actualInt);
+        assertEquals(3l, actualLong);
+        assertEquals(3d, actualDouble);
+        assertEquals(3d, actualBigDecimal.doubleValue());
     }
 
     @Test
-    public void min() throws Exception {
+    void min() {
         // arrange
         List<Integer> listInt = new List<>(1, 2, 3);
         List<Long> listLong = new List<>(1l, 2l, 3l);
@@ -468,14 +468,14 @@ public class IEnumerableTest {
         BigDecimal actualBigDecimal = listBigDecimal.min(x -> x);
 
         // assert
-        assertEquals(1, actualInt, 0);
-        assertEquals(1l, actualLong, 0);
-        assertEquals(1d, actualDouble, 0);
-        assertEquals(1d, actualBigDecimal.doubleValue(), 0);
+        assertEquals(1, actualInt);
+        assertEquals(1l, actualLong);
+        assertEquals(1d, actualDouble);
+        assertEquals(1d, actualBigDecimal.doubleValue());
     }
 
     @Test
-    public void ofType() throws Exception {
+    void ofType() {
         // arrange
         List<Object> list = new List<>(1, "2", 3, "4");
 
@@ -491,7 +491,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void orderBy() throws Exception {
+    void orderBy() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
@@ -505,7 +505,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void orderByDescending() throws Exception {
+    void orderByDescending() {
         // arrange
         class Javascript {
             String name;
@@ -533,7 +533,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void range() throws Exception {
+    void range() {
         // act
         List<Integer> actual = IEnumerable.range(-2, 3);
 
@@ -544,7 +544,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void repeat() throws Exception {
+    void repeat() {
         // act
         List<String> actual = IEnumerable.repeat(String.class, "circle", 10);
 
@@ -554,7 +554,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void reverse() throws Exception {
+    void reverse() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
@@ -572,7 +572,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void select() throws Exception {
+    void select() {
         // arrange
         class Javascript {
             String name;
@@ -600,7 +600,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void selectMany() throws Exception {
+    void selectMany() {
         // arrange
         class Javascript {
             String name;
@@ -634,7 +634,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void sequenceEqual() throws Exception {
+    void sequenceEqual() {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
         List<Integer> secondMatch = new List<>(1, 2, 3);
@@ -653,7 +653,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void single() throws Exception {
+    void single() {
         // arrange
         List<Integer> list = new List<>(1);
         List<Integer> listMany = new List<>(1, 2, 3);
@@ -668,7 +668,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void singleOrDefault() throws Exception {
+    void singleOrDefault() {
         // arrange
         List<Integer> list = new List<>(1);
         List<Integer> listMany = new List<>(1, 2, 3);
@@ -688,7 +688,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void skip() throws Exception {
+    void skip() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
@@ -702,7 +702,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void skipWhile() throws Exception {
+    void skipWhile() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3, 4, 5);
 
@@ -718,7 +718,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void sum() throws Exception {
+    void sum() {
         // arrange
         List<Integer> listInt = new List<>(1, 2, 3);
         List<Long> listLong = new List<>(1l, 2l, 3l);
@@ -737,12 +737,12 @@ public class IEnumerableTest {
         // assert
         assertEquals(6, actualInt);
         assertEquals(6l, actualLong);
-        assertEquals(6.6d, actualDouble, 0d);
-        assertEquals(new BigDecimal(6.6).doubleValue(), actualBigDecimal.doubleValue(), 0d);
+        assertEquals(6.6d, actualDouble);
+        assertEquals(new BigDecimal(6.6).doubleValue(), actualBigDecimal.doubleValue());
     }
 
     @Test
-    public void take() throws Exception {
+    void take() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
@@ -760,7 +760,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void takeWhile() throws Exception {
+    void takeWhile() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
@@ -774,7 +774,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void thenBy() throws Exception {
+    void thenBy() {
         // arrange
         class Javascript {
             String name;
@@ -806,7 +806,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void thenByDescending() throws Exception {
+    void thenByDescending() {
         // arrange
         class Javascript {
             String name;
@@ -838,7 +838,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void toArray() throws Exception {
+    void toArray() {
         // arrange
         List<String> list = new List<>("Backbone", "Angular", "React");
 
@@ -852,7 +852,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void toDictionary() throws Exception {
+    void toDictionary() {
         // arrange
         class Javascript {
             String name;
@@ -878,7 +878,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void toDictionarySelect() throws Exception {
+    void toDictionarySelect() {
         // arrange
         class Javascript {
             String name;
@@ -904,7 +904,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void union() throws Exception {
+    void union() {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
         List<Integer> second = new List<>(0, 1, 3, 4);
@@ -922,7 +922,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void where() throws Exception {
+    void where() {
         // arrange
         List<Integer> list = new List<>(1, 2, 3);
 
@@ -936,7 +936,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void where_index() throws Exception {
+    void where_index() {
         // arrange
         List<String> list = new List<>("baCkbone", "reaCt", "angular");
 
@@ -950,7 +950,7 @@ public class IEnumerableTest {
     }
 
     @Test
-    public void zip() throws Exception {
+    void zip() {
         // arrange
         List<Integer> first = new List<>(1, 2, 3);
         List<String> second = new List<>("Angular", "React", "Backbone");

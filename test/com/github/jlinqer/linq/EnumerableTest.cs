@@ -13,7 +13,7 @@ namespace Com.JLinqer
     {
 
         [TestMethod]
-        public void All()
+        void All()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -28,7 +28,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Aggregate()
+        void Aggregate()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -41,7 +41,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Any()
+        void Any()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -61,7 +61,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Average()
+        void Average()
         {
             // arrange
             List<int> listInt = new List<int>() { 1, 2, 3, 4 };
@@ -88,7 +88,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Cast()
+        void Cast()
         {
             // arrange
             List<Object> list = new List<Object>() { 1, 2, 3 };
@@ -103,7 +103,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Concat()
+        void Concat()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -117,7 +117,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Count()
+        void Count()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -142,7 +142,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void DefaultIfEmpty()
+        void DefaultIfEmpty()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -162,7 +162,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Distinct()
+        void Distinct()
         {
             // arrange
             List<int> list =
@@ -179,7 +179,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ElementAt()
+        void ElementAt()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -192,7 +192,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ElementAtOrDefault()
+        void ElementAtOrDefault()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -207,7 +207,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Empty()
+        void Empty()
         {
             // act
             List<double> actual = Enumerable.Empty<double>().ToList();
@@ -217,7 +217,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Except()
+        void Except()
         {
             // arrange
             List<int> first = new List<int>() { 1, 2, 3 };
@@ -232,7 +232,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void First()
+        void First()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -247,7 +247,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void FirstOrDefault()
+        void FirstOrDefault()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -267,7 +267,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void GroupBy()
+        void GroupBy()
         {
 
             List<Javascript> list = new List<Javascript>() {
@@ -289,7 +289,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void GroupJoin()
+        void GroupJoin()
         {
             List<Javascript> outer = new List<Javascript>() {
                     new Javascript("Angular", 1),
@@ -321,7 +321,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Intersect()
+        void Intersect()
         {
             // arrange
             List<int> first = new List<int>() { 1, 2, 3 };
@@ -337,7 +337,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Join()
+        void Join()
         {
             List<Javascript> outer = new List<Javascript>() {
                     new Javascript("Angular", 1),
@@ -368,7 +368,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Last()
+        void Last()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -383,7 +383,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void LastOrDefault()
+        void LastOrDefault()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -404,7 +404,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Max()
+        void Max()
         {
             // arrange
             List<int> listInt = new List<int>() { 1, 2, 3 };
@@ -430,7 +430,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Min()
+        void Min()
         {
             // arrange
             List<int> listInt = new List<int>() { 1, 2, 3 };
@@ -456,7 +456,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void OfType()
+        void OfType()
         {
             // arrange
             List<Object> list = new List<Object>() { 1, "2", 3, "4" };
@@ -473,7 +473,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void OrderBy()
+        void OrderBy()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -488,7 +488,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void OrderByDescending()
+        void OrderByDescending()
         {
             // arrange
             List<Javascript> list = new List<Javascript>() {
@@ -507,7 +507,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Range()
+        void Range()
         {
             // act
             List<int> actual = Enumerable.Range(-2, 3).ToList();
@@ -519,7 +519,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Repeat()
+        void Repeat()
         {
             // act
             List<String> actual = Enumerable.Repeat<String>("circle", 10).ToList();
@@ -530,7 +530,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Reverse()
+        void Reverse()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -546,7 +546,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Select()
+        void Select()
         {
             // arrange
             List<Javascript> list = new List<Javascript>() {
@@ -565,7 +565,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void selectMany()
+        void selectMany()
         {
             // arrange
 
@@ -589,7 +589,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void SequenceEqual()
+        void SequenceEqual()
         {
             // arrange
             List<int> first = new List<int>() { 1, 2, 3 };
@@ -609,7 +609,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Single()
+        void Single()
         {
             // arrange
             List<int> list = new List<int>() { 1 };
@@ -625,7 +625,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void SingleOrDefault()
+        void SingleOrDefault()
         {
             // arrange
             List<int> list = new List<int>() { 1 };
@@ -646,7 +646,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Skip()
+        void Skip()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -661,7 +661,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void SkipWhile()
+        void SkipWhile()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3, 4, 5 };
@@ -678,7 +678,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Sum()
+        void Sum()
         {
             // arrange
             List<int> listInt = new List<int>() { 1, 2, 3 };
@@ -704,7 +704,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Take()
+        void Take()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -723,7 +723,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void TakeWhile()
+        void TakeWhile()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -738,7 +738,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ThenBy()
+        void ThenBy()
         {
             // arrange
             List<Javascript> list = new List<Javascript>() {
@@ -759,7 +759,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ThenByDescending()
+        void ThenByDescending()
         {
             // arrange
             List<Javascript> list = new List<Javascript>() {
@@ -780,7 +780,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ToArray()
+        void ToArray()
         {
             // arrange
             List<String> list = new List<String>() { "Backbone", "Angular", "React" };
@@ -795,7 +795,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ToDictionary()
+        void ToDictionary()
         {
             // arrange
             List<Javascript> list = new List<Javascript>() {
@@ -812,7 +812,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void ToDictionarySelect()
+        void ToDictionarySelect()
         {
             // arrange
             List<Javascript> list = new List<Javascript>() {
@@ -829,7 +829,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Union()
+        void Union()
         {
             // arrange
             List<int> first = new List<int>() { 1, 2, 3 };
@@ -848,7 +848,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Where()
+        void Where()
         {
             // arrange
             List<int> list = new List<int>() { 1, 2, 3 };
@@ -863,7 +863,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void WhereIndex()
+        void WhereIndex()
         {
             // arrange
             List<string> list = new List<string>() { "baCkbone", "reaCt", "angular" };
@@ -878,7 +878,7 @@ namespace Com.JLinqer
         }
 
         [TestMethod]
-        public void Zip()
+        void Zip()
         {
             // arrange
             List<int> first = new List<int>() { 1, 2, 3 };
